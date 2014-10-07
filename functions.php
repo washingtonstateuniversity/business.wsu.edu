@@ -36,8 +36,10 @@ function cob_bu_navigation_filter_item_attrs( $item_classes, $page ) {
 add_filter( 'bu_navigation_filter_anchor_attrs', 'cob_bu_navigation_filter_anchor_attrs', 10, 2 );
 /**
  * Filter anchor attributes in generate page menu to remove the title so that our default Overview
- * behavior remains. This should be changed in the future to allow overwriting of the title for
- * instances where the overview should be named something else.
+ * behavior remains.
+ *
+ * If a label is assigned to the page, it will be displayed as the section label. The actual page
+ * title will be used as the Overview replacement.
  *
  * @param array   $attrs List of attributes to output as part of the anchor.
  * @param WP_Post $page  Post object for the current page.
@@ -45,6 +47,11 @@ add_filter( 'bu_navigation_filter_anchor_attrs', 'cob_bu_navigation_filter_ancho
  * @return mixed
  */
 function cob_bu_navigation_filter_anchor_attrs( $attrs, $page ) {
-	$attrs['title'] = '';
+	if ( trim( $page->post_title ) !== $attrs['title'] ) {
+		$attrs['title'] = $page->post_title;
+	} else {
+		$attrs['title'] = '';
+	}
+
 	return $attrs;
 }
