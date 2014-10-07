@@ -1,29 +1,23 @@
 <nav id="spine-sitenav" class="spine-sitenav">
-	<ul>
-		<?php
-		$menu_section_args = array(
-			'theme_location'  => '', // replaced in loop
-			'menu'            => '', // replaced in loop
-			'container'       => false,
-			'container_class' => false,
-			'container_id'    => false,
-			'menu_class'      => null,
-			'menu_id'         => null,
-			'echo'            => true,
-			'items_wrap'      => '%3$s',
-			'depth'           => 5,
+	<?php
+
+	if ( function_exists( 'bu_navigation_display_primary' ) ) {
+		$bu_nav_args = array(
+			'post_types'      => array( 'page' ), // post types to display
+			'include_links'   => true, // whether or not to include BU Navigation links with pages
+			'dive'            => true, // whether or not to display descendants
+			'depth'           => 4, // how many levels of descendants to display
+			'max_items'       => 99, // how many items to display per list
+			'container_tag'   => 'ul', // HTML tag to use for menu container
+			'container_id'    => '', // HTML ID attribute of menu container
+			'container_class' => '', // HTML class attributes for menu container
+			'item_tag'        => 'li', // HTML tag to use for individual menu items
+			'identify_top'    => false, // If set to true, uses post name as HTML ID attribute for top level posts
+			'whitelist_top'   => null, // optional string or array of post names to whitelist for top level
+			'echo'            => 1 // whether to display immediately or return
 		);
+		bu_navigation_display_primary( $bu_nav_args );
+	}
 
-		$x = 1;
-
-		while( $x <= 10 ) {
-			if ( has_nav_menu( 'cob-section-' . $x ) ) {
-				$menu_section_args['theme_location'] = 'cob-section-' . $x;
-				$menu_section_args['menu'] = 'cob-section-' . $x;
-				wp_nav_menu( $menu_section_args );
-			}
-			$x++;
-		}
-		?>
-	</ul>
+	?>
 </nav>

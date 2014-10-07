@@ -5,16 +5,46 @@ add_action( 'after_setup_theme', 'cob_theme_setup' );
  * Setup functionality used by the theme.
  */
 function cob_theme_setup() {
+	// Register the nav menu we're using in the header.
 	register_nav_menu( 'cob-header', 'Header' );
 
-	register_nav_menu( 'cob-section-1', 'Site - Section 1' );
-	register_nav_menu( 'cob-section-2', 'Site - Section 2' );
-	register_nav_menu( 'cob-section-3', 'Site - Section 3' );
-	register_nav_menu( 'cob-section-4', 'Site - Section 4' );
-	register_nav_menu( 'cob-section-5', 'Site - Section 5' );
-	register_nav_menu( 'cob-section-6', 'Site - Section 6' );
-	register_nav_menu( 'cob-section-7', 'Site - Section 7' );
-	register_nav_menu( 'cob-section-8', 'Site - Section 8' );
-	register_nav_menu( 'cob-section-9', 'Site - Section 9' );
-	register_nav_menu( 'cob-section-10', 'Site - Section 10' );
+	// Add support for the BU Navigation plugin.
+	add_theme_support( 'bu-navigation-primary' );
+}
+
+add_filter( 'bu_navigation_filter_item_attrs', 'cob_bu_navigation_filter_item_attrs', 10, 2 );
+/**
+ * Filter the list item classes to manually add current and dogeared when necessary.
+ *
+ * @param array   $item_classes List of classes assigned to the list item.
+ * @param WP_Post $page         Post object for the current page.
+ *
+ * @return array
+ */
+function cob_bu_navigation_filter_item_attrs( $item_classes, $page ) {
+	if ( in_array( 'current_page_item', $item_classes ) || in_array( 'current_page_parent', $item_classes ) ) {
+		$item_classes[] = 'current';
+	}
+
+	if ( is_singular() && get_the_ID() == $page->ID ) {
+		$item_classes[] = 'dogeared';
+	}
+
+	return $item_classes;
+}
+
+add_filter( 'bu_navigation_filter_anchor_attrs', 'cob_bu_navigation_filter_anchor_attrs', 10, 2 );
+/**
+ * Filter anchor attributes in generate page menu to remove the title so that our default Overview
+ * behavior remains. This should be changed in the future to allow overwriting of the title for
+ * instances where the overview should be named something else.
+ *
+ * @param array   $attrs List of attributes to output as part of the anchor.
+ * @param WP_Post $page  Post object for the current page.
+ *
+ * @return mixed
+ */
+function cob_bu_navigation_filter_anchor_attrs( $attrs, $page ) {
+	$attrs['title'] = '';
+	return $attrs;
 }
