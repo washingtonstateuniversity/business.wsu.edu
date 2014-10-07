@@ -1,5 +1,8 @@
 <?php
 
+// Include our color palette selection tool.
+include_once( __DIR__ . '/includes/plugin-color-palette.php' );
+
 add_action( 'after_setup_theme', 'cob_theme_setup' );
 /**
  * Setup functionality used by the theme.
