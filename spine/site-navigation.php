@@ -11,7 +11,7 @@
 			'menu_id'         => null,
 			'echo'            => true,
 			'items_wrap'      => '%3$s',
-			'depth'           => 3,
+			'depth'           => 5,
 		);
 
 		$x = 1;
