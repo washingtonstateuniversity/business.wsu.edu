@@ -25,6 +25,7 @@ class WSU_COB_Color_Palette {
 		add_action( 'add_meta_boxes', array( $this, 'add_meta_boxes' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ) );
 		add_action( 'save_post', array( $this, 'save_post' ), 10, 2 );
+		add_filter( 'body_class', array( $this, 'add_body_class' ), 11 );
 	}
 
 	/**
@@ -111,6 +112,25 @@ class WSU_COB_Color_Palette {
 
 		$new_palette = sanitize_key( $_POST['cob_wsu_palette'] );
 		update_post_meta( $post_id, $this->color_palette_meta_key, $new_palette );
+	}
+
+	/**
+	 * Assign a color palette to a page's view.
+	 *
+	 * @param array $classes List of classes to assign to this view's body element.
+	 *
+	 * @return array Modified list of classes.
+	 */
+	public function add_body_class( $classes ) {
+		if ( is_singular( 'page' ) ) {
+			$palette = get_post_meta( get_the_ID(), $this->color_palette_meta_key, true );
+			if ( ! array_key_exists( $palette, $this->color_palettes ) ) {
+				$palette = 'default';
+			}
+			$classes[] = 'cob-palette-' . $palette;
+		}
+
+		return $classes;
 	}
 }
 new WSU_COB_Color_Palette();
