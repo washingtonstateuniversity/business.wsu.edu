@@ -10,6 +10,7 @@ function cob_theme_setup() {
 
 	// Add support for the BU Navigation plugin.
 	add_theme_support( 'bu-navigation-primary' );
+	remove_theme_support( 'bu-navigation-widget' );
 }
 
 add_filter( 'bu_navigation_filter_item_attrs', 'cob_bu_navigation_filter_item_attrs', 10, 2 );
