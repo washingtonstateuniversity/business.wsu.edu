@@ -1,5 +1,4 @@
 (function($){
-
 	$(document ).ready(function() {
 		$('.cob-palettes' ).on('click', '.admin-palette-option', function() {
 			var selected_palette = $(this);

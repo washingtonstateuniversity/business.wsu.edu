@@ -9,7 +9,7 @@ include_once( __DIR__ . '/includes/plugin-color-palette.php' );
  * @return string Current script version
  */
 function wsu_cob_script_version() {
-	return spine_get_script_version() . '0.1.0';
+	return spine_get_script_version() . '0.2.0';
 }
 
 add_action( 'after_setup_theme', 'cob_theme_setup' );
