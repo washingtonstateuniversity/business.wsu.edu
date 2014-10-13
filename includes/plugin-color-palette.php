@@ -133,8 +133,8 @@ class WSU_COB_Color_Palette {
 				$palette = 'default';
 			}
 
-			// Only apply a master palette class to the body if no header images are present.
-			if ( false === spine_has_featured_image() && '' === spine_has_background_image() ) {
+			// Only apply a master palette class to the body if no background image is present.
+			if ( '' === spine_has_background_image() ) {
 				$classes[] = 'cob-palette-' . $palette;
 			}
 
