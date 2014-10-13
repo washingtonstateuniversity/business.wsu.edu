@@ -3,6 +3,11 @@
 class WSU_COB_Headlines {
 
 	/**
+	 * @var string Meta key for storing headline.
+	 */
+	public $headline_meta_key = '_wsu_cob_headline';
+
+	/**
 	 * @var string Meta key for storing subtitle.
 	 */
 	public $subtitle_meta_key = '_wsu_cob_subtitle';
@@ -30,7 +35,7 @@ class WSU_COB_Headlines {
 			return;
 		}
 
-		add_meta_box( 'wsu_cob_headlines', 'Additional Headlines', array( $this, 'display_headlines_metabox' ), null, 'normal', 'default' );
+		add_meta_box( 'wsu_cob_headlines', 'Page Headlines', array( $this, 'display_headlines_metabox' ), null, 'normal', 'default' );
 	}
 
 	/**
@@ -39,11 +44,16 @@ class WSU_COB_Headlines {
 	 * @param WP_Post $post
 	 */
 	public function display_headlines_metabox( $post ) {
+		$headline = get_post_meta( $post->ID, $this->headline_meta_key, true );
 		$subtitle = get_post_meta( $post->ID, $this->subtitle_meta_key, true );
 		$call_to_action = get_post_meta( $post->ID, $this->call_to_action_meta_key, true );
 
 		wp_nonce_field( 'cob-headlines-nonce', '_cob_headlines_nonce' );
 		?>
+		<p class="description">Primary headline to be used for the page.</p>
+		<label for="cob-page-headline">Headline:</label>
+		<input type="text" class="widefat" id="cob-page-headline" name="cob_page_headline" value="<?php echo esc_attr( $headline ); ?>" />
+
 		<p class="description">Subtitle to be used on various views throughout the theme.</p>
 		<label for="cob-subtitle">Subtitle:</label>
 		<input type="text" class="widefat" id="cob-subtitle" name="cob_subtitle" value="<?php echo esc_attr( $subtitle ); ?>" />
@@ -76,12 +86,17 @@ class WSU_COB_Headlines {
 		if ( ! isset( $_POST['_cob_headlines_nonce'] ) || false === wp_verify_nonce( $_POST['_cob_headlines_nonce'], 'cob-headlines-nonce' ) ) {
 			return;
 		}
+
 		if ( isset( $_POST['cob_call_to_action'] ) ) {
 			update_post_meta( $post_id, $this->call_to_action_meta_key, wp_kses_post( $_POST['cob_call_to_action'] ) );
 		}
 
 		if ( isset( $_POST['cob_subtitle'] ) ) {
 			update_post_meta( $post_id, $this->subtitle_meta_key, wp_kses_post( $_POST['cob_subtitle'] ) );
+		}
+
+		if ( isset( $_POST['cob_headline'] ) ) {
+			update_post_meta( $post_id, $this->subtitle_meta_key, sanitize_text_field( $_POST['cob_headline'] ) );
 		}
 	}
 }
