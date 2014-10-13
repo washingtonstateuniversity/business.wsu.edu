@@ -31,9 +31,9 @@ if ( spine_get_option( 'main_header_show' ) == 'true' ) : ?>
 			<div style="clear:both;"></div>
 		</section>
 		<div class="cob-headline-container">
-			<h1></h1>
-			<div class="subtitle"></div>
-			<div class="call-to-action"></div>
+			<?php if ( $cob_page_headline = cob_get_page_headline() ) : ?><h1><?php echo esc_html( $cob_page_headline ); ?></h1><?php endif; ?>
+			<?php if ( $cob_page_subtitle = cob_get_page_subtitle() ) : ?><div class="subtitle"><?php echo wp_kses_post( $cob_page_subtitle ); ?></div><?php endif; ?>
+			<?php if ( $cob_page_cta = cob_get_page_call_to_action() ) : ?><div class="call-to-action"><?php echo esc_html( $cob_page_cta ); ?></div><?php endif; ?>
 		</div>
 	</header>
 <?php endif; ?>
