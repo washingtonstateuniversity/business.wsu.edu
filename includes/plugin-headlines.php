@@ -96,8 +96,56 @@ class WSU_COB_Headlines {
 		}
 
 		if ( isset( $_POST['cob_page_headline'] ) ) {
-			update_post_meta( $post_id, $this->subtitle_meta_key, sanitize_text_field( $_POST['cob_page_headline'] ) );
+			update_post_meta( $post_id, $this->headline_meta_key, sanitize_text_field( $_POST['cob_page_headline'] ) );
 		}
 	}
+
+	public function get_headline( $post_id ) {
+		return get_post_meta( $post_id, $this->headline_meta_key, true );
+	}
+
+	public function get_subtitle( $post_id ) {
+		return get_post_meta( $post_id, $this->subtitle_meta_key, true );
+	}
+
+	public function get_call_to_action( $post_id ) {
+		return get_post_meta( $post_id, $this->call_to_action_meta_key, true );
+	}
 }
-new WSU_COB_Headlines();
+$wsu_cob_headlines = new WSU_COB_Headlines();
+
+function cob_get_page_headline( $post_id = 0 ) {
+	global $wsu_cob_headlines;
+
+	$post_id = absint( $post_id );
+
+	if ( 0 === $post_id ) {
+		$post_id = get_the_ID();
+	}
+
+	return $wsu_cob_headlines->get_headline( $post_id );
+}
+
+function cob_get_page_subtitle( $post_id = 0 ) {
+	global $wsu_cob_headlines;
+
+	$post_id = absint( $post_id );
+
+	if ( 0 === $post_id ) {
+		$post_id = get_the_ID();
+	}
+
+	return $wsu_cob_headlines->get_subtitle( $post_id );
+}
+
+function cob_get_page_call_to_action( $post_id = 0 ) {
+	global $wsu_cob_headlines;
+
+	$post_id = absint( $post_id );
+
+	if ( 0 === $post_id ) {
+		$post_id = get_the_ID();
+	}
+
+	return $wsu_cob_headlines->get_call_to_action( $post_id );
+}
