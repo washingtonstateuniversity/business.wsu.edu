@@ -1,9 +1,9 @@
 .admin-palette-option {
 	position: relative;
 	display: inline-block;
-	margin: 5px;
-	width: 100px;
-	height: 100px;
+	margin: 20px 5px 5px 5px;
+	width: 125px;
+	height: 125px;
 	border: 1px solid #bbb;
 }
 
@@ -22,7 +22,7 @@
 	bottom: -15px;
 	left: 0;
 	display: block;
-	width: 100px;
+	width: 125px;
 	height: 5px;
 	background-color: #7a7a7a;
 	content: '';
