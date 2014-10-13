@@ -6,11 +6,16 @@ class WSU_COB_Color_Palette {
 	 * @var array List of color palettes available for pages.
 	 */
 	public $color_palettes = array(
-		'default' => array( 'name' => 'Default', 'hex' => '#f6861f' ),
+		'default' => array( 'name' => 'Default (Orange)', 'hex' => '#f6861f' ),
+		'green' => array( 'name' => 'Green', 'hex' => '#c6d02e' ),
+		'blue-1' => array( 'name' => 'Blue (One)', 'hex' => '#00a5bd' ),
+		'blue-2' => array( 'name' => 'Blue (Two)', 'hex' => '#82a9af' ),
+		'blue-3' => array( 'name' => 'Blue (Three)', 'hex' => '#aec7cd' ),
 		'yellow' => array( 'name' => 'Yellow', 'hex' => '#ffb81c' ),
-		'blue' => array( 'name' => 'Blue', 'hex' => '#00a5bd' ),
-		'green' => array( 'name' => 'Green', 'hex' => '#ada400' ),
-		'grey' => array( 'name' => 'Grey', 'hex' => '#5e6a71' ),
+		'beige-1' => array( 'name' => 'Beige (One)', 'hex' => '#ccc4a2' ),
+		'beige-2' => array( 'name' => 'Beige (Two)', 'hex' => '#a9a387' ),
+		'wazzu-1' => array( 'name' => 'Wazzu (One)', 'hex' => '#8d959a' ),
+		'wazzu-2' => array( 'name' => 'Wazzu (Two)', 'hex' => '#5b6770' ),
 	);
 
 	/**
