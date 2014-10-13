@@ -3,6 +3,9 @@
 // Include our color palette selection tool.
 include_once( __DIR__ . '/includes/plugin-color-palette.php' );
 
+// Allow for subtitles and calls to action.
+include_once( __DIR__ . '/includes/plugin-headlines.php' );
+
 /**
  * Provide a cache breaking script version for the theme.
  *
