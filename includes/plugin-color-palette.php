@@ -132,7 +132,14 @@ class WSU_COB_Color_Palette {
 			if ( ! array_key_exists( $palette, $this->color_palettes ) ) {
 				$palette = 'default';
 			}
-			$classes[] = 'cob-palette-' . $palette;
+
+			// Only apply a master palette class to the body if no header images are present.
+			if ( false === spine_has_featured_image() && '' === spine_has_background_image() ) {
+				$classes[] = 'cob-palette-' . $palette;
+			}
+
+			// Always apply a palette class to the body for text.
+			$classes[] = 'cob-palette-text-' . $palette;
 		}
 
 		return $classes;
