@@ -35,7 +35,7 @@ class WSU_COB_Headlines {
 			return;
 		}
 
-		add_meta_box( 'wsu_cob_headlines', 'Page Headlines', array( $this, 'display_headlines_metabox' ), null, 'normal', 'default' );
+		add_meta_box( 'wsu_cob_headlines', 'Page Headlines', array( $this, 'display_headlines_metabox' ), null, 'normal', 'high' );
 	}
 
 	/**
@@ -50,17 +50,17 @@ class WSU_COB_Headlines {
 
 		wp_nonce_field( 'cob-headlines-nonce', '_cob_headlines_nonce' );
 		?>
-		<p class="description">Primary headline to be used for the page.</p>
 		<label for="cob-page-headline">Headline:</label>
 		<input type="text" class="widefat" id="cob-page-headline" name="cob_page_headline" value="<?php echo esc_attr( $headline ); ?>" />
+		<p class="description">Primary headline to be used for the page.</p>
 
-		<p class="description">Subtitle to be used on various views throughout the theme.</p>
 		<label for="cob-subtitle">Subtitle:</label>
 		<input type="text" class="widefat" id="cob-subtitle" name="cob_subtitle" value="<?php echo esc_attr( $subtitle ); ?>" />
-		<br /><br />
-		<p class="description">Call to action text for use as a guide to this page.</p>
+		<p class="description">Subtitle to be used on various views throughout the theme.</p>
+
 		<label for="cob-cta">Call to Action:</label>
 		<input type="text" class="widefat" id="cob-cta" name="cob_call_to_action" value="<?php echo esc_attr( $call_to_action ); ?>" />
+		<p class="description">Call to action text for use as a guide to this page.</p>
 		<?php
 	}
 
@@ -95,8 +95,8 @@ class WSU_COB_Headlines {
 			update_post_meta( $post_id, $this->subtitle_meta_key, wp_kses_post( $_POST['cob_subtitle'] ) );
 		}
 
-		if ( isset( $_POST['cob_headline'] ) ) {
-			update_post_meta( $post_id, $this->subtitle_meta_key, sanitize_text_field( $_POST['cob_headline'] ) );
+		if ( isset( $_POST['cob_page_headline'] ) ) {
+			update_post_meta( $post_id, $this->subtitle_meta_key, sanitize_text_field( $_POST['cob_page_headline'] ) );
 		}
 	}
 }
