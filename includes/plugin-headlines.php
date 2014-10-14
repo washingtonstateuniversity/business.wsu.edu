@@ -125,6 +125,8 @@ class WSU_COB_Headlines {
 	 * @return string HTML content to display.
 	 */
 	public function display_home_headline( $atts ) {
+		$atts = shortcode_atts( array( 'id' => 0, 'link' => 'page' ), $atts );
+
 		if ( ! isset( $atts['id'] ) || empty( absint( $atts['id'] ) ) ) {
 			return '';
 		}
@@ -149,7 +151,26 @@ class WSU_COB_Headlines {
 			$style = '';
 		}
 
-		$content = '<div ' . $style . ' class="home-headline ' . $class . '"><h2>' . esc_html( $headline ) . '</h2><div class="home-subtitle">' . $subtitle .  '</div></div>';
+		if ( 'page' === $atts['link'] ) {
+			$page_url = get_the_permalink( $post_id );
+		} elseif ( 'none' === $atts['link'] ) {
+			$page_url = false;
+		} else {
+			$page_url = $atts['link'];
+		}
+
+		$content = '';
+
+		if ( $page_url ) {
+			$content = '<a href="' . esc_url( $page_url ) . '">';
+		}
+
+		$content .= '<div ' . $style . ' class="home-headline ' . $class . '"><h2>' . esc_html( $headline ) . '</h2><div class="home-subtitle">' . $subtitle .  '</div></div>';
+
+		if ( $page_url ) {
+			$content .= '</a>';
+		}
+
 		return $content;
 	}
 
