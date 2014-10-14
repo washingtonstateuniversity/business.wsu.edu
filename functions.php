@@ -12,7 +12,7 @@ include_once( __DIR__ . '/includes/plugin-headlines.php' );
  * @return string Current script version
  */
 function wsu_cob_script_version() {
-	return spine_get_script_version() . '0.5.1';
+	return spine_get_script_version() . '0.5.2';
 }
 
 add_action( 'after_setup_theme', 'cob_theme_setup' );
