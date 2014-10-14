@@ -144,5 +144,21 @@ class WSU_COB_Color_Palette {
 
 		return $classes;
 	}
+
+	public function get_color_palette( $post_id ) {
+		return get_post_meta( $post_id, $this->color_palette_meta_key, true );
+	}
 }
-new WSU_COB_Color_Palette();
+$wsu_cob_color_palette = new WSU_COB_Color_Palette();
+
+function cob_get_page_color_palette( $post_id = 0 ) {
+	global $wsu_cob_color_palette;
+
+	$post_id = absint( $post_id );
+
+	if ( 0 === $post_id ) {
+		$post_id = get_the_ID();
+	}
+
+	return $wsu_cob_color_palette->get_color_palette( $post_id );
+}
