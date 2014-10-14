@@ -86,3 +86,53 @@ function cob_content_syndication_display( $content, $atts ) {
 
 	return $content .= '<div class="wsuwp-json-content" data-source="' . esc_js( $atts['object'] ) . '"></div>';
 }
+
+add_filter( 'tribe_events_getLink', 'cob_modify_events_url', 10, 2 );
+/**
+ * Replace generated URLs from The Events Calendar to appear under a second level rather
+ * than the single level forced by the plugin.
+ *
+ * @param string $event_url URL being output.
+ * @param string $type      Type of URL being output - home, list, month, day, single, etc...
+ *
+ * @return string URL to output.
+ */
+function cob_modify_events_url( $event_url, $type ) {
+	if ( 'single' === $type ) {
+		$event_url = str_replace( home_url( '/event/' ), home_url( '/news-events/calendar/event/' ), $event_url );
+	} else {
+		$event_url = str_replace( home_url( '/events/' ), home_url( '/news-events/calendar/' ), $event_url );
+	}
+
+	return $event_url;
+}
+
+add_filter( 'generate_rewrite_rules', 'cob_filter_rewrite_rules', 11 );
+/**
+ * Replace rewrite rules provided by The Events Calendar with our own to support
+ * a nested URL structure.
+ *
+ * @param WP_Rewrite $wp_rewrite
+ *
+ * @return WP_Rewrite
+ */
+function cob_filter_rewrite_rules( $wp_rewrite ) {
+	foreach( $wp_rewrite->rules as $key => $rule ) {
+		if ( 0 === strpos( $key, 'events/' ) ) {
+			$new_key = str_replace( 'events/', 'news-events/calendar/', $key );
+		} elseif ( 0 === strpos( $key, '(.*)events/' ) ) {
+			$new_key = str_replace( '(.*)events/', '(.*)news-events/calendar/', $key );
+		} elseif ( 0 === strpos( $key, 'event/' ) ) {
+			$new_key = str_replace( 'event/', 'news-events/calendar/event/', $key );
+		} elseif ( 0 === strpos( $key, 'organizer/' ) ) {
+			$new_key = str_replace( 'organizer/', 'news-events/calendar/organizer/', $key );
+		} elseif ( 0 === strpos( $key, 'venue/' ) ) {
+			$new_key = str_replace( $key, 'news-events/calendar/venue/', $key );
+		} else {
+			$new_key = $key;
+		}
+		unset( $wp_rewrite->rules[ $key ] );
+		$wp_rewrite->rules[ $new_key ] = $rule;
+	}
+	return $wp_rewrite;
+}
