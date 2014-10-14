@@ -71,3 +71,18 @@ function cob_bu_navigation_filter_anchor_attrs( $attrs, $page ) {
 
 	return $attrs;
 }
+
+add_filter( 'wsuwp_content_syndicate_json', 'cob_content_syndication_display', 10, 2 );
+/**
+ * Add a container to the output of the JSON data.
+ *
+ * @param $content
+ * @param $atts
+ *
+ * @return string
+ */
+function cob_content_syndication_display( $content, $atts ) {
+	wp_enqueue_script( 'cob-display-json-feeds', get_stylesheet_directory_uri() . '/js/display-json-feeds.js', array( 'jquery' ), wsu_cob_script_version(), true );
+
+	return $content .= '<div class="wsuwp-json-content" data-source="' . esc_js( $atts['object'] ) . '"></div>';
+}
