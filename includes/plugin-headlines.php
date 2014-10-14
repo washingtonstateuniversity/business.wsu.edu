@@ -118,26 +118,30 @@ class WSU_COB_Headlines {
 
 	public function display_home_headline( $atts ) {
 		if ( ! isset( $atts['id'] ) || empty( absint( $atts['id'] ) ) ) {
-			return;
+			return '';
 		}
+
 		$post_id = absint( $atts['id'] );
 
 		$headline = $this->get_headline( $post_id );
 		$subtitle = $this->get_subtitle( $post_id );
-		$cta = $this->get_call_to_action( $post_id );
 
 		if ( class_exists( 'MultiPostThumbnails' ) ) {
 			$background_image = MultiPostThumbnails::get_post_thumbnail_url( get_post_type(), 'background-image', $post_id, 'spine-xlarge_size' );
+		} else {
+			$background_image = false;
 		}
 
 		if ( $background_image ) {
 			$class = 'headline-has-background';
+			$style = 'style="background-image: url(' . esc_url( $background_image ) .');"';
 		} else {
 			$palette = cob_get_page_color_palette( $post_id );
-			$class = 'cob-palette-' . $palette;
+			$class = 'cob-palette-block-' . $palette;
+			$style = '';
 		}
 
-		$content = '<div class="home-headline ' . $class . '"></div>';
+		$content = '<div ' . $style . ' class="home-headline ' . $class . '"><h2>' . esc_html( $headline ) . '</h2><div class="home-subtitle">' . $subtitle .  '</div></div>';
 		return $content;
 	}
 
