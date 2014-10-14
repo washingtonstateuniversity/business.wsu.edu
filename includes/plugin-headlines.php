@@ -18,6 +18,11 @@ class WSU_COB_Headlines {
 	public $call_to_action_meta_key = '_wsu_cob_call_to_action';
 
 	/**
+	 * @var string Meta key for storing the call to action's URL.
+	 */
+	public $call_to_action_url_meta_key = '_wsu_cob_call_to_action_url';
+
+	/**
 	 * Setup the hooks.
 	 */
 	public function __construct() {
@@ -47,6 +52,7 @@ class WSU_COB_Headlines {
 		$headline = get_post_meta( $post->ID, $this->headline_meta_key, true );
 		$subtitle = get_post_meta( $post->ID, $this->subtitle_meta_key, true );
 		$call_to_action = get_post_meta( $post->ID, $this->call_to_action_meta_key, true );
+		$call_to_action_url = get_post_meta( $post->ID, $this->call_to_action_url_meta_key, true );
 
 		wp_nonce_field( 'cob-headlines-nonce', '_cob_headlines_nonce' );
 		?>
@@ -61,6 +67,9 @@ class WSU_COB_Headlines {
 		<label for="cob-cta">Call to Action:</label>
 		<input type="text" class="widefat" id="cob-cta" name="cob_call_to_action" value="<?php echo esc_attr( $call_to_action ); ?>" />
 		<p class="description">Call to action text for use as a guide to this page.</p>
+
+		<label for="cob-cta-url">Call to Action URL:</label>
+		<input type="text" class="widefat" id="cob-cta-url" name="cob_call_to_action_url" value="<?php echo esc_attr( $call_to_action_url ); ?>" />
 		<?php
 	}
 
@@ -91,6 +100,12 @@ class WSU_COB_Headlines {
 			update_post_meta( $post_id, $this->call_to_action_meta_key, wp_kses_post( $_POST['cob_call_to_action'] ) );
 		}
 
+		if ( isset( $_POST['cob_call_to_action_url'] ) && ! empty( trim( $_POST['cob_call_to_action_url'] ) ) ) {
+			update_post_meta( $post_id, $this->call_to_action_url_meta_key, esc_url_raw( $_POST['cob_call_to_action_url'] ) );
+		} elseif ( ! isset( $_POST['cob_call_to_action_url'] ) || empty( trim( $_POST['cob_call_to_action_url'] ) ) ) {
+			delete_post_meta( $post_id, $this->call_to_action_url_meta_key );
+		}
+
 		if ( isset( $_POST['cob_subtitle'] ) ) {
 			update_post_meta( $post_id, $this->subtitle_meta_key, wp_kses_post( $_POST['cob_subtitle'] ) );
 		}
@@ -110,6 +125,10 @@ class WSU_COB_Headlines {
 
 	public function get_call_to_action( $post_id ) {
 		return get_post_meta( $post_id, $this->call_to_action_meta_key, true );
+	}
+
+	public function get_call_to_action_url( $post_id ) {
+		return get_post_meta( $post_id, $this->call_to_action_url_meta_key, true );
 	}
 }
 $wsu_cob_headlines = new WSU_COB_Headlines();
@@ -148,4 +167,16 @@ function cob_get_page_call_to_action( $post_id = 0 ) {
 	}
 
 	return $wsu_cob_headlines->get_call_to_action( $post_id );
+}
+
+function cob_get_page_call_to_action_url( $post_id = 0 ) {
+	global $wsu_cob_headlines;
+
+	$post_id = absint( $post_id );
+
+	if ( 0 === $post_id ) {
+		$post_id = get_the_ID();
+	}
+
+	return $wsu_cob_headlines->get_call_to_action_url( $post_id );
 }

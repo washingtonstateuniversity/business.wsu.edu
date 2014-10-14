@@ -33,7 +33,15 @@ if ( spine_get_option( 'main_header_show' ) == 'true' ) : ?>
 		<div class="cob-headline-container">
 			<?php if ( $cob_page_headline = cob_get_page_headline() ) : ?><h1 class="page-headline"><?php echo esc_html( $cob_page_headline ); ?></h1><?php endif; ?>
 			<?php if ( $cob_page_subtitle = cob_get_page_subtitle() ) : ?><div class="page-subtitle"><?php echo wp_kses_post( $cob_page_subtitle ); ?></div><?php endif; ?>
-			<?php if ( $cob_page_cta = cob_get_page_call_to_action() ) : ?><div class="page-call-to-action"><?php echo esc_html( $cob_page_cta ); ?></div><?php endif; ?>
+			<?php if ( $cob_page_cta = cob_get_page_call_to_action() ) : ?>
+				<div class="page-call-to-action">
+				<?php if ( $cob_page_cta_url = cob_get_page_call_to_action_url() ) : ?>
+					<a href="<?php esc_url( $cob_page_cta_url ); ?>"><?php echo esc_html( $cob_page_cta ); ?></a>
+				<?php else : ?>
+					<?php echo esc_html( $cob_page_cta ); ?>
+				<?php endif; ?>
+				</div>
+			<?php endif; ?>
 		</div>
 	</header>
 <?php endif; ?>
