@@ -28,6 +28,7 @@ class WSU_COB_Headlines {
 	public function __construct() {
 		add_action( 'add_meta_boxes', array( $this, 'add_meta_boxes' ), 10 );
 		add_action( 'save_post', array( $this, 'save_post' ), 10, 2 );
+		add_shortcode( 'cob_home_headline', array( $this, 'display_home_headline' ) );
 	}
 
 	/**
@@ -113,6 +114,31 @@ class WSU_COB_Headlines {
 		if ( isset( $_POST['cob_page_headline'] ) ) {
 			update_post_meta( $post_id, $this->headline_meta_key, sanitize_text_field( $_POST['cob_page_headline'] ) );
 		}
+	}
+
+	public function display_home_headline( $atts ) {
+		if ( ! isset( $atts['id'] ) || empty( absint( $atts['id'] ) ) ) {
+			return;
+		}
+		$post_id = absint( $atts['id'] );
+
+		$headline = $this->get_headline( $post_id );
+		$subtitle = $this->get_subtitle( $post_id );
+		$cta = $this->get_call_to_action( $post_id );
+
+		if ( class_exists( 'MultiPostThumbnails' ) ) {
+			$background_image = MultiPostThumbnails::get_post_thumbnail_url( get_post_type(), 'background-image', $post_id, 'spine-xlarge_size' );
+		}
+
+		if ( $background_image ) {
+			$class = 'headline-has-background';
+		} else {
+			$palette = cob_get_page_color_palette( $post_id );
+			$class = 'cob-palette-' . $palette;
+		}
+
+		$content = '<div class="home-headline ' . $class . '"></div>';
+		return $content;
 	}
 
 	public function get_headline( $post_id ) {
