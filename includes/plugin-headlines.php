@@ -116,6 +116,14 @@ class WSU_COB_Headlines {
 		}
 	}
 
+	/**
+	 * Display a content block, intended for the home page, that links through to the
+	 * page it represents.
+	 *
+	 * @param array $atts List of attributes to apply to the shortcode.
+	 *
+	 * @return string HTML content to display.
+	 */
 	public function display_home_headline( $atts ) {
 		if ( ! isset( $atts['id'] ) || empty( absint( $atts['id'] ) ) ) {
 			return '';
@@ -145,24 +153,60 @@ class WSU_COB_Headlines {
 		return $content;
 	}
 
+	/**
+	 * Retrieve the assigned headline of a page.
+	 *
+	 * @param $post_id
+	 *
+	 * @return mixed
+	 */
 	public function get_headline( $post_id ) {
 		return get_post_meta( $post_id, $this->headline_meta_key, true );
 	}
 
+	/**
+	 * Retrieve the assigned subtitle of a page.
+	 *
+	 * @param $post_id
+	 *
+	 * @return mixed
+	 */
 	public function get_subtitle( $post_id ) {
 		return get_post_meta( $post_id, $this->subtitle_meta_key, true );
 	}
 
+	/**
+	 * Retrieve the assigned call to action of a page.
+	 *
+	 * @param $post_id
+	 *
+	 * @return mixed
+	 */
 	public function get_call_to_action( $post_id ) {
 		return get_post_meta( $post_id, $this->call_to_action_meta_key, true );
 	}
 
+	/**
+	 * Retrieve the assigned URL for the call to action of a page.
+	 *
+	 * @param $post_id
+	 *
+	 * @return mixed
+	 */
 	public function get_call_to_action_url( $post_id ) {
 		return get_post_meta( $post_id, $this->call_to_action_url_meta_key, true );
 	}
 }
 $wsu_cob_headlines = new WSU_COB_Headlines();
 
+/**
+ * Wrapper to retrieve an assigned page headline. Will fallback to the current page if
+ * a post ID is not specified.
+ *
+ * @param int $post_id
+ *
+ * @return mixed
+ */
 function cob_get_page_headline( $post_id = 0 ) {
 	global $wsu_cob_headlines;
 
@@ -175,6 +219,14 @@ function cob_get_page_headline( $post_id = 0 ) {
 	return $wsu_cob_headlines->get_headline( $post_id );
 }
 
+/**
+ * Wrapper to retrieve an assigned page subtitle. Will fallback to the current page if
+ * a post ID is not specified.
+ *
+ * @param int $post_id
+ *
+ * @return mixed
+ */
 function cob_get_page_subtitle( $post_id = 0 ) {
 	global $wsu_cob_headlines;
 
@@ -187,6 +239,14 @@ function cob_get_page_subtitle( $post_id = 0 ) {
 	return $wsu_cob_headlines->get_subtitle( $post_id );
 }
 
+/**
+ * Wrapper to retrieve an assigned page call to action. Will fallback to the current page
+ * if a post ID is not specified.
+ *
+ * @param int $post_id
+ *
+ * @return mixed
+ */
 function cob_get_page_call_to_action( $post_id = 0 ) {
 	global $wsu_cob_headlines;
 
@@ -199,6 +259,14 @@ function cob_get_page_call_to_action( $post_id = 0 ) {
 	return $wsu_cob_headlines->get_call_to_action( $post_id );
 }
 
+/**
+ * Wrapper to retrieve an assigned URL for a page's call to action. Will fallback to the
+ * current page if a post ID is not specified.
+ *
+ * @param int $post_id
+ *
+ * @return mixed
+ */
 function cob_get_page_call_to_action_url( $post_id = 0 ) {
 	global $wsu_cob_headlines;
 
