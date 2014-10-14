@@ -120,10 +120,14 @@ function cob_filter_rewrite_rules( $wp_rewrite ) {
 	foreach( $wp_rewrite->rules as $key => $rule ) {
 		if ( 0 === strpos( $key, 'events/' ) ) {
 			$new_key = str_replace( 'events/', 'news-events/calendar/', $key );
-		} elseif( 0 === strpos( $key, '(.*)events/' ) ) {
+		} elseif ( 0 === strpos( $key, '(.*)events/' ) ) {
 			$new_key = str_replace( '(.*)events/', '(.*)news-events/calendar/', $key );
-		} elseif( 0 === strpos( $key, 'event/' ) ) {
+		} elseif ( 0 === strpos( $key, 'event/' ) ) {
 			$new_key = str_replace( 'event/', 'news-events/calendar/event/', $key );
+		} elseif ( 0 === strpos( $key, 'organizer/' ) ) {
+			$new_key = str_replace( 'organizer/', 'news-events/calendar/organizer/', $key );
+		} elseif ( 0 === strpos( $key, 'venue/' ) ) {
+			$new_key = str_replace( $key, 'news-events/calendar/venue/', $key );
 		} else {
 			$new_key = $key;
 		}
