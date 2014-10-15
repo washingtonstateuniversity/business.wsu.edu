@@ -19,7 +19,7 @@ class WSU_COB_Events {
 			echo '<ul class="events-headlines">';
 			foreach ( $events as $event ) {
 				setup_postdata( $event );
-				echo '<li><a href="' . get_the_permalink( $event->post_id ) . '">' . $event->post_title . '</a></li>';
+				echo '<li>' . tribe_get_start_date( $event->ID, false, 'M n' ) . ' <a href="' . get_the_permalink( $event->ID ) . '">' . $event->post_title . '</a></li>';
 				wp_reset_postdata();
 			}
 			echo '</ul>';
