@@ -12,24 +12,44 @@ class WSU_COB_Events {
 		);
 		$atts = shortcode_atts( $default_atts, $atts );
 
-		$events = tribe_get_events( array( 'posts_per_page' => absint( $atts['count'] ) ) );
+		$args = array( 'post_type' => 'tribe_events', 'posts_per_page' => absint( $atts['count'] ) );
+		$events = new WP_Query( $args );
 
 		if ( 'headlines' === $atts['display'] ) {
 			ob_start();
+
 			echo '<ul class="events-headlines">';
-			foreach ( $events as $event ) {
-				setup_postdata( $event );
-				echo '<li>' . tribe_get_start_date( $event->ID, false, 'M n' ) . ' <a href="' . get_the_permalink( $event->ID ) . '">' . $event->post_title . '</a></li>';
-				wp_reset_postdata();
+			while ( $events->have_posts() ) {
+				$events->the_post();
+				echo '<li>' . tribe_get_start_date( get_the_ID(), false, 'M j' ) . ' <a href="' . get_the_permalink( get_the_ID() ) . '">' . get_the_title() . '</a></li>';
 			}
 			echo '</ul>';
+
 			$content = ob_get_contents();
 			ob_end_clean();
 
 		} else {
-			$content = '';
-		}
+			ob_start();
+			?>
+			<div class="tribe-events-loop vcalendar">
 
+				<?php while ( $events->have_posts() ) : $events->the_post(); ?>
+
+					<!-- Month / Year Headers -->
+					<?php tribe_events_list_the_date_headers(); ?>
+
+					<!-- Event  -->
+					<div id="post-<?php get_the_ID() ?>" class="<?php tribe_events_event_classes() ?>">
+						<?php tribe_get_template_part( 'list/single', 'event' ) ?>
+					</div><!-- .hentry .vevent -->
+
+				<?php endwhile; ?>
+
+			</div><!-- .tribe-events-loop -->
+			<?php
+			$content = ob_get_contents();
+			ob_end_clean();
+		}
 		return $content;
 	}
 }
