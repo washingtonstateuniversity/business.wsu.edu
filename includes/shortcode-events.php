@@ -8,11 +8,23 @@ class WSU_COB_Events {
 	public function display_events( $atts ) {
 		$default_atts = array(
 			'display' => 'full',
+			'category' => '',
 			'count' => 10,
 		);
 		$atts = shortcode_atts( $default_atts, $atts );
 
 		$args = array( 'post_type' => 'tribe_events', 'posts_per_page' => absint( $atts['count'] ) );
+
+		if ( '' !== $atts['category'] ) {
+			$args['tax_query'] = array(
+				array(
+					'taxonomy' => 'tribe_events_cat',
+					'field' => 'slug',
+					'terms' => $atts['category'],
+				),
+			);
+		}
+
 		$events = new WP_Query( $args );
 
 		if ( 'headlines' === $atts['display'] ) {
