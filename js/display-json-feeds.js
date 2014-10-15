@@ -5,11 +5,12 @@
 			var source_data_obj = $(this ).data('source');
 			var source_data = window[source_data_obj];
 
-			container.append( '<ul>' );
+			var json_html = '<ul>';
 			for ( var item in source_data ) {
-				container.append( '<li><a href="' + source_data[item ].link + '">' + source_data[item].title + '</a></li>' );
+				json_html += '<li><a href="' + source_data[item ].link + '">' + source_data[item].title + '</a></li>';
 			}
-			container.append( '</ul>' );
+			json_html += '</ul>';
+			container.append( json_html );
 		});
 	} else {
 		$('.wsuwp-json-content' ).each(function(){
