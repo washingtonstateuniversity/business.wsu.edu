@@ -165,7 +165,7 @@ class WSU_COB_Headlines {
 			$content = '<a href="' . esc_url( $page_url ) . '">';
 		}
 
-		$content .= '<div ' . $style . ' class="home-headline ' . $class . '"><h2>' . strip_tags( $headline, '<br>' ) . '</h2><div class="home-subtitle">' . $subtitle .  '</div></div>';
+		$content .= '<div ' . $style . ' class="home-headline ' . $class . '"><h2>' . strip_tags( $headline, '<br>' ) . '</h2><div class="home-subtitle">' . strip_tags( $subtitle, '<br><em><strong>' ) .  '</div></div>';
 
 		if ( $page_url ) {
 			$content .= '</a>';
