@@ -38,12 +38,23 @@ add_filter( 'bu_navigation_filter_item_attrs', 'cob_bu_navigation_filter_item_at
  * @return array
  */
 function cob_bu_navigation_filter_item_attrs( $item_classes, $page ) {
+	global $wp_query;
+
 	if ( in_array( 'current_page_item', $item_classes ) || in_array( 'current_page_parent', $item_classes ) ) {
 		$item_classes[] = 'current';
 	}
 
 	if ( is_singular() && get_the_ID() == $page->ID ) {
 		$item_classes[] = 'dogeared';
+	}
+
+	if ( isset( $wp_query->tribe_is_event ) && true === $wp_query->tribe_is_event ) {
+		if ( isset( $page->url ) && home_url( '/news-events/calendar/' ) === $page->url ) {
+			$item_classes[] = 'current dogeared';
+		}
+		if ( isset( $page->url ) && home_url( '/news-events/' ) === $page->url ) {
+			$item_classes[] = 'current';
+		}
 	}
 
 	return $item_classes;
