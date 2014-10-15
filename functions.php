@@ -120,6 +120,23 @@ function cob_modify_events_url( $event_url, $type ) {
 	return $event_url;
 }
 
+add_filter( 'post_type_link', 'cob_filter_post_type_link', 10, 2 );
+/**
+ * Filter the post type link to show a single event under news-events/calendar/event/
+ *
+ * @param string  $post_link
+ * @param WP_Post $post
+ *
+ * @return string
+ */
+function cob_filter_post_type_link( $post_link, $post ) {
+	if ( 'tribe_events' === $post->post_type ) {
+		$post_link = str_replace( home_url( '/event/' ), home_url( '/news-events/calendar/event/' ), $post_link );
+	}
+
+	return $post_link;
+}
+
 add_filter( 'generate_rewrite_rules', 'cob_filter_rewrite_rules', 11 );
 /**
  * Replace rewrite rules provided by The Events Calendar with our own to support
