@@ -6,6 +6,8 @@ include_once( __DIR__ . '/includes/plugin-color-palette.php' );
 // Allow for subtitles and calls to action.
 include_once( __DIR__ . '/includes/plugin-headlines.php' );
 
+include_once( __DIR__ . '/includes/shortcode-events.php' );
+
 /**
  * Provide a cache breaking script version for the theme.
  *
