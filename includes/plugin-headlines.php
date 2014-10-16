@@ -112,7 +112,7 @@ class WSU_COB_Headlines {
 		}
 
 		if ( isset( $_POST['cob_page_headline'] ) ) {
-			update_post_meta( $post_id, $this->headline_meta_key, strip_tags( $_POST['cob_page_headline'], '<br>' ) );
+			update_post_meta( $post_id, $this->headline_meta_key, strip_tags( $_POST['cob_page_headline'], '<br><span><em><strong>' ) );
 		}
 	}
 
@@ -169,7 +169,7 @@ class WSU_COB_Headlines {
 			$content = '<a href="' . esc_url( $page_url ) . '">';
 		}
 
-		$content .= '<div ' . $style . ' class="home-headline ' . $class . '"><h2>' . strip_tags( $headline, '<br>' ) . '</h2><div class="home-subtitle">' . strip_tags( $subtitle, '<br><em><strong>' ) .  '</div></div>';
+		$content .= '<div ' . $style . ' class="home-headline ' . $class . '"><h2>' . strip_tags( $headline, '<br><span><em><strong>' ) . '</h2><div class="home-subtitle">' . strip_tags( $subtitle, '<br><span><em><strong>' ) .  '</div></div>';
 
 		if ( $page_url ) {
 			$content .= '</a>';
