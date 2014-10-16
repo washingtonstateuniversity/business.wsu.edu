@@ -177,6 +177,10 @@ add_action( 'parse_query', 'cob_remove_events_from_edit', 51 );
  * @param $query
  */
 function cob_remove_events_from_edit( $query ) {
+	if ( ! is_admin() || ! get_current_screen() ) {
+		return;
+	}
+
 	if ( 'edit' === get_current_screen()->base && 'tribe_events' !== get_current_screen()->post_type ) {
 		$query->set( 'post_type', get_current_screen()->post_type );
 	}
