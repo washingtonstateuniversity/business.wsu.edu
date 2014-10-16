@@ -166,3 +166,20 @@ function cob_filter_rewrite_rules( $wp_rewrite ) {
 	}
 	return $wp_rewrite;
 }
+
+add_action( 'parse_query', 'cob_remove_events_from_edit', 51 );
+/**
+ * The Events Calendar makes the decision that tribe_events items should appear in every
+ * taxonomy query via a `parse_query` action. This causes some issues on the edit screen
+ * in WordPress, as a string is expected for the post_type data. This resets the query back
+ * to the originally requested post type.
+ *
+ * @param $query
+ */
+function cob_remove_events_from_edit( $query ) {
+	if ( 'edit' === get_current_screen()->base && 'tribe_events' !== get_current_screen()->post_type ) {
+		$query->set( 'post_type', get_current_screen()->post_type );
+	}
+
+	return;
+}
