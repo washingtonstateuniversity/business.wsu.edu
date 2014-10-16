@@ -14,7 +14,7 @@ include_once( __DIR__ . '/includes/shortcode-events.php' );
  * @return string Current script version
  */
 function wsu_cob_script_version() {
-	return spine_get_script_version() . '0.5.2';
+	return spine_get_script_version() . '0.6.1';
 }
 
 add_action( 'after_setup_theme', 'cob_theme_setup' );
