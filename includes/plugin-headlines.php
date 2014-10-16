@@ -131,13 +131,17 @@ class WSU_COB_Headlines {
 			return '';
 		}
 
-		$post_id = absint( $atts['id'] );
+		$post = get_post( absint( $atts['id'] ) );
 
-		$headline = $this->get_headline( $post_id );
-		$subtitle = $this->get_subtitle( $post_id );
+		if ( ! $post ) {
+			return '';
+		}
+
+		$headline = $this->get_headline( $post->ID );
+		$subtitle = $this->get_subtitle( $post->ID );
 
 		if ( class_exists( 'MultiPostThumbnails' ) ) {
-			$background_image = MultiPostThumbnails::get_post_thumbnail_url( get_post_type(), 'background-image', $post_id, 'spine-xlarge_size' );
+			$background_image = MultiPostThumbnails::get_post_thumbnail_url( $post->post_type, 'background-image', $post->ID, 'spine-xlarge_size' );
 		} else {
 			$background_image = false;
 		}
@@ -146,13 +150,13 @@ class WSU_COB_Headlines {
 			$class = 'headline-has-background';
 			$style = 'style="background-image: url(' . esc_url( $background_image ) .');"';
 		} else {
-			$palette = cob_get_page_color_palette( $post_id );
+			$palette = cob_get_page_color_palette( $post->id );
 			$class = 'cob-palette-block-' . $palette;
 			$style = '';
 		}
 
 		if ( 'page' === $atts['link'] ) {
-			$page_url = get_the_permalink( $post_id );
+			$page_url = get_the_permalink( $post->ID );
 		} elseif ( 'none' === $atts['link'] ) {
 			$page_url = false;
 		} else {
