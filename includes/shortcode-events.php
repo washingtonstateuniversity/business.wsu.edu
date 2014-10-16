@@ -62,6 +62,9 @@ class WSU_COB_Events {
 			$content = ob_get_contents();
 			ob_end_clean();
 		}
+
+		wp_reset_query();
+
 		return $content;
 	}
 }
