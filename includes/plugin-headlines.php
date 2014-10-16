@@ -150,7 +150,7 @@ class WSU_COB_Headlines {
 			$class = 'headline-has-background';
 			$style = 'style="background-image: url(' . esc_url( $background_image ) .');"';
 		} else {
-			$palette = cob_get_page_color_palette( $post->id );
+			$palette = cob_get_page_color_palette( $post->ID );
 			$class = 'cob-palette-block-' . $palette;
 			$style = '';
 		}
