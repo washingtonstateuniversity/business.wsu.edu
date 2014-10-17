@@ -1,5 +1,6 @@
 (function($, window){
 	if ( 0 === $('.home' ).length ) {
+		// Thanks to a good write-up on approach from https://medium.com/@TonyJing/medium-style-header-aa738696c6ac
 		var scroll_top = $(window).scrollTop();
 		var cob_headline_container = $('.cob-headline-container');
 
