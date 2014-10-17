@@ -34,7 +34,7 @@ class WSU_COB_Events {
 			while ( $events->have_posts() ) {
 				$events->the_post();
 				$date = tribe_get_start_date( get_the_ID(), false, 'U' );
-				echo '<li><time datetime="' . date( 'Y-m-d', $date ) .'">' . date( 'M j', $date ) . '</time> <a href="' . get_the_permalink( get_the_ID() ) . '">' . get_the_title() . '</a></li>';
+				echo '<li><time datetime="' . date( 'Y-m-d', $date ) .'">' . date( 'M&\\nb\\sp;j', $date ) . '</time> <a href="' . get_the_permalink( get_the_ID() ) . '">' . get_the_title() . '</a></li>';
 			}
 			echo '</ul>';
 
