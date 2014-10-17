@@ -33,7 +33,7 @@ class WSU_COB_Events {
 			echo '<ul class="events-headlines">';
 			while ( $events->have_posts() ) {
 				$events->the_post();
-				echo '<li>' . tribe_get_start_date( get_the_ID(), false, 'M j' ) . ' <a href="' . get_the_permalink( get_the_ID() ) . '">' . get_the_title() . '</a></li>';
+				echo '<li><time>' . tribe_get_start_date( get_the_ID(), false, 'M j' ) . '</time> <a href="' . get_the_permalink( get_the_ID() ) . '">' . get_the_title() . '</a></li>';
 			}
 			echo '</ul>';
 
