@@ -100,6 +100,16 @@ function cob_content_syndication_display( $content, $atts ) {
 	return $content .= '<div class="wsuwp-json-content" data-source="' . esc_js( $atts['object'] ) . '"></div>';
 }
 
+add_action( 'wp_enqueue_scripts', 'cob_enqueue_scripts' );
+/**
+ * Enqueue any custom scripting provided by the child theme.
+ */
+function cob_enqueue_scripts() {
+	if ( is_singular() ) {
+		wp_enqueue_script( 'cob-custom-js', get_stylesheet_directory_uri() . '/js/custom.js', array( 'jquery' ), wsu_cob_script_version(), true );
+	}
+}
+
 add_filter( 'tribe_events_getLink', 'cob_modify_events_url', 10, 2 );
 /**
  * Replace generated URLs from The Events Calendar to appear under a second level rather
