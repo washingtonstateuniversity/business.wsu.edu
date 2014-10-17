@@ -146,11 +146,12 @@ class WSU_COB_Headlines {
 			$background_image = false;
 		}
 
+		$palette = cob_get_page_color_palette( $post->ID );
+
 		if ( $background_image ) {
 			$class = 'headline-has-background';
 			$style = 'style="background-image: url(' . esc_url( $background_image ) .');"';
 		} else {
-			$palette = cob_get_page_color_palette( $post->ID );
 			$class = 'cob-palette-block-' . $palette;
 			$style = '';
 		}
@@ -166,7 +167,7 @@ class WSU_COB_Headlines {
 		$content = '';
 
 		if ( $page_url ) {
-			$content = '<a class="home-link-wrap" href="' . esc_url( $page_url ) . '">';
+			$content = '<a class="home-link-wrap cob-palette-text-' . $palette . '" href="' . esc_url( $page_url ) . '">';
 		}
 
 		$content .= '<div ' . $style . ' class="home-headline ' . $class . '"><h2>' . strip_tags( $headline, '<br><span><em><strong>' ) . '</h2><div class="home-subtitle">' . strip_tags( $subtitle, '<br><span><em><strong>' ) .  '</div></div>';
