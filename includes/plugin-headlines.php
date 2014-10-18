@@ -125,7 +125,7 @@ class WSU_COB_Headlines {
 	 * @return string HTML content to display.
 	 */
 	public function display_home_headline( $atts ) {
-		$atts = shortcode_atts( array( 'id' => 0, 'link' => 'page' ), $atts );
+		$atts = shortcode_atts( array( 'id' => 0, 'link' => 'page', 'cta' => '' ), $atts );
 
 		if ( ! isset( $atts['id'] ) || empty( absint( $atts['id'] ) ) ) {
 			return '';
@@ -164,13 +164,19 @@ class WSU_COB_Headlines {
 			$page_url = $atts['link'];
 		}
 
+		if ( ! empty( $atts['cta'] ) ) {
+			$call_to_action = '<div class="home-cta">' . sanitize_text_field( $atts['cta'] ) . '</div>';
+		} else {
+			$call_to_action = '';
+		}
+
 		$content = '';
 
 		if ( $page_url ) {
 			$content = '<a class="home-link-wrap cob-palette-text-' . $palette . '" href="' . esc_url( $page_url ) . '">';
 		}
 
-		$content .= '<div ' . $style . ' class="home-headline ' . $class . '"><h2>' . strip_tags( $headline, '<br><span><em><strong>' ) . '</h2><div class="home-subtitle">' . strip_tags( $subtitle, '<br><span><em><strong>' ) .  '</div></div>';
+		$content .= '<div ' . $style . ' class="home-headline ' . $class . '"><h2>' . strip_tags( $headline, '<br><span><em><strong>' ) . '</h2><div class="home-subtitle">' . strip_tags( $subtitle, '<br><span><em><strong>' ) .  '</div>' . $call_to_action . '</div>';
 
 		if ( $page_url ) {
 			$content .= '</a>';
