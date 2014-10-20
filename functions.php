@@ -199,6 +199,14 @@ function cob_remove_events_from_edit( $query ) {
 }
 
 add_filter( 'bu_navigation_filter_pages', 'cob_filter_page_urls', 10 );
+/**
+ * Look for pages that are intended to be section labels rather than
+ * places where content exists.
+ *
+ * @param $pages
+ *
+ * @return array
+ */
 function cob_filter_page_urls( $pages ) {
 	global $wpdb;
 
@@ -206,22 +214,14 @@ function cob_filter_page_urls( $pages ) {
 
 	if ( is_array( $pages ) && count( $pages ) > 0 ) {
 
-		$ids = array_keys( $pages );
-		$query = sprintf( "SELECT post_id, meta_value FROM %s WHERE meta_key = '%s' AND post_id IN (%s) AND meta_value != ''",
-			$wpdb->postmeta,
-			'_wp_page_template',
-			implode( ',', $ids )
-		);
+		$ids = array_map( 'absint', array_keys( $pages ) );
+		$query = $wpdb->prepare( "SELECT post_id FROM $wpdb->postmeta WHERE meta_key = '%s' AND post_id IN (" .  implode( ',', $ids ) . ") and meta_value = '%s'", '_wp_page_template', 'template-section-label.php' );
 		$labels = $wpdb->get_results( $query, OBJECT_K );
 
 		if ( is_array( $labels ) && count( $labels ) > 0 ) {
 			foreach ( $pages as $page ) {
 				if ( array_key_exists( $page->ID, $labels ) ) {
-					$label = $labels[ $page->ID ];
-					if ( 'template-section-label.php' === $label->meta_value ) {
-						$page->url = '#';
-					}
-
+					$page->url = '#';
 				}
 				$filtered[ $page->ID ] = $page;
 			}
