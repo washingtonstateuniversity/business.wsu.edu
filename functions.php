@@ -209,3 +209,18 @@ function cob_filter_page_urls( $pages ) {
 
 	return $filtered;
 }
+
+add_filter( 'bu_navigation_filter_anchor_attrs', 'cob_bu_navigation_filter_anchor_attrs', 10, 1 );
+/**
+ * Filter anchor attributes in generate page menu to remove the title so that our default Overview
+ * behavior remains.
+ *
+ * @param array $attrs List of attributes to output as part of the anchor.
+ *
+ * @return array
+ */
+function cob_bu_navigation_filter_anchor_attrs( $attrs ) {
+	$attrs['title'] = '';
+
+	return $attrs;
+}
