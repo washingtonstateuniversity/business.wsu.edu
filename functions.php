@@ -175,7 +175,7 @@ function cob_remove_events_from_edit( $query ) {
 	return;
 }
 
-add_filter( 'bu_navigation_filter_pages', 'cob_filter_page_urls', 10 );
+add_filter( 'bu_navigation_filter_pages', 'cob_filter_page_urls', 11 );
 /**
  * Look for pages that are intended to be section labels rather than
  * places where content exists.
