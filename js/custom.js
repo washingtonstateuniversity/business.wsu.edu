@@ -36,10 +36,16 @@ FontDetect=function(){function e(){if(!n){n=!0;var e=document.body,t=document.bo
 		view_data.main_header.css( { 'height' : view_data.main_header_height } );
 
 		// Main headline
-		var background_position = 0;
-		var margin_top = 100;
-		var header_opacity = 1;
-		var cta_opacity = 1;
+		var page_position = $(this ).scrollTop();
+
+		var background_position = 0 + ( page_position / 4.5 );
+		var margin_top = 100 + ( page_position / 6.25 );
+		var header_opacity = 1 - ( page_position / 700 );
+		var cta_opacity = 1 - ( page_position / 300 );
+
+		view_data.main_header.css( { 'background-position-y' : background_position } );
+		view_data.headline_container.css( { 'margin-top' : margin_top, 'opacity' : header_opacity } );
+		view_data.call_to_action.css( { 'opacity' : cta_opacity } );
 
 		$(window).on( 'scroll', function() {
 			var page_position = $(this).scrollTop();
