@@ -48,14 +48,14 @@ FontDetect=function(){function e(){if(!n){n=!0;var e=document.body,t=document.bo
 				// scrolling down
 				view_data.main_header_height = view_data.main_header_height - ( page_position - view_data.last_position );
 				background_position = background_position + ( ( page_position - view_data.last_position ) / 4.5 );
-				margin_top = margin_top + ( ( page_position - view_data.last_position ) / 2.25 );
+				margin_top = margin_top + ( ( page_position - view_data.last_position ) / 3.25 );
 				header_opacity = header_opacity - ( ( page_position - view_data.last_position ) / 800 );
 				cta_opacity = cta_opacity - ( ( page_position - view_data.last_position ) / 200 );
 			} else {
 				// scrolling up
 				view_data.main_header_height = view_data.main_header_height + ( view_data.last_position - page_position );
 				background_position = background_position - ( ( view_data.last_position - page_position ) / 4.5 );
-				margin_top = margin_top - ( ( view_data.last_position - page_position ) / 2.25 );
+				margin_top = margin_top - ( ( view_data.last_position - page_position ) / 3.25 );
 				header_opacity = header_opacity + ( ( view_data.last_position - page_position ) / 800 );
 				cta_opacity = cta_opacity + ( ( view_data.last_position - page_position ) / 200 );
 			}
