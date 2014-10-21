@@ -1,5 +1,24 @@
 (function($, window){
-	if ( 0 === $('.home' ).length ) {
+	var view_is_home = 0;
+
+	/**
+	 * Determine if this page view has the `home` class assigned to body.
+	 *
+	 * @returns bool True if home page, false if not.
+	 */
+	function is_home() {
+		if ( 0 === view_is_home ) {
+			view_is_home = ( $('.home' ).length > 0 );
+		}
+
+		return view_is_home;
+	}
+
+	function is_ios() {
+		return ( navigator.userAgent.match(/(iPad|iPhone|iPod)/g) ? true : false );
+	}
+
+	if ( ! is_home() && ! is_ios() ) {
 		// Thanks to a good write-up on approach from https://medium.com/@TonyJing/medium-style-header-aa738696c6ac
 		var last_position = $(window).scrollTop();
 
