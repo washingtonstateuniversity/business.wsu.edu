@@ -2,21 +2,14 @@
 FontDetect=function(){function e(){if(!n){n=!0;var e=document.body,t=document.body.firstChild,i=document.createElement("div");i.id="fontdetectHelper",r=document.createElement("span"),r.innerText="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ",i.appendChild(r),e.insertBefore(i,t),i.style.position="absolute",i.style.visibility="hidden",i.style.top="-200px",i.style.left="-100000px",i.style.width="100000px",i.style.height="200px",i.style.fontSize="100px"}}function t(e,t){return e instanceof Element?window.getComputedStyle(e).getPropertyValue(t):window.jQuery?$(e).css(t):""}var n=!1,i=["serif","sans-serif","monospace","cursive","fantasy"],r=null;return{onFontLoaded:function(t,i,r,o){if(t){var s=o&&o.msInterval?o.msInterval:100,a=o&&o.msTimeout?o.msTimeout:2e3;if(i||r){if(n||e(),this.isFontLoaded(t))return void(i&&i(t));var l=this,f=(new Date).getTime(),d=setInterval(function(){if(l.isFontLoaded(t))return clearInterval(d),void i(t);var e=(new Date).getTime();e-f>a&&(clearInterval(d),r&&r(t))},s)}}},isFontLoaded:function(t){var o=0,s=0;n||e();for(var a=0;a<i.length;++a){if(r.style.fontFamily='"'+t+'",'+i[a],o=r.offsetWidth,a>0&&o!=s)return!1;s=o}return!0},whichFont:function(e){for(var n=t(e,"font-family"),r=n.split(","),o=r.shift();o;){o=o.replace(/^\s*['"]?\s*([^'"]*)\s*['"]?\s*$/,"$1");for(var s=0;s<i.length;s++)if(o==i[s])return o;if(this.isFontLoaded(o))return o;o=r.shift()}return null}}}();
 
 (function($, FontDetect, window){
-	var view_data = {
-		is_home : 0
-	};
 
-	/**
-	 * Determine if this page view has the `home` class assigned to body.
-	 *
-	 * @returns bool True if home page, false if not.
-	 */
-	var is_home = function() {
-		if ( 0 === view_data.is_home ) {
-			view_data.is_home = ( $('.home' ).length > 0 );
-		}
+	var view_data = {};
 
-		return view_data.is_home;
+	var incrementor = {
+		background: 4.5,
+		margin: 6.25,
+		opacity: 500,
+		cta_opacity: 200
 	};
 
 	var is_ios = function() {
@@ -36,28 +29,36 @@ FontDetect=function(){function e(){if(!n){n=!0;var e=document.body,t=document.bo
 		view_data.main_header.css( { 'height' : view_data.main_header_height } );
 
 		// Main headline
-		var background_position = 0;
-		var margin_top = 100;
-		var header_opacity = 1;
-		var cta_opacity = 1;
+		var page_position = $(this ).scrollTop();
+
+		var background_position = 0 + ( page_position / incrementor.background );
+		var margin_top = 100 + ( page_position / incrementor.margin );
+		var header_opacity = 1 - ( page_position / incrementor.opacity );
+		var cta_opacity = 1 - ( page_position / incrementor.cta_opacity );
+
+		view_data.main_header.css( { 'background-position-y' : background_position } );
+		view_data.headline_container.css( { 'margin-top' : margin_top, 'opacity' : header_opacity } );
+		view_data.call_to_action.css( { 'opacity' : cta_opacity } );
 
 		$(window).on( 'scroll', function() {
 			var page_position = $(this).scrollTop();
 
+			if ( page_position > view_data.main_header_height ) {
+				return;
+			}
+
 			if ( page_position > view_data.last_position ) {
 				// scrolling down
-				view_data.main_header_height = view_data.main_header_height - ( page_position - view_data.last_position );
-				background_position = background_position + ( ( page_position - view_data.last_position ) / 4.5 );
-				margin_top = margin_top + ( ( page_position - view_data.last_position ) / 3.25 );
-				header_opacity = header_opacity - ( ( page_position - view_data.last_position ) / 800 );
-				cta_opacity = cta_opacity - ( ( page_position - view_data.last_position ) / 200 );
+				background_position = background_position + ( ( page_position - view_data.last_position ) / incrementor.background );
+				margin_top = margin_top + ( ( page_position - view_data.last_position ) / incrementor.margin );
+				header_opacity = header_opacity - ( ( page_position - view_data.last_position ) / incrementor.opacity );
+				cta_opacity = cta_opacity - ( ( page_position - view_data.last_position ) / incrementor.cta_opacity );
 			} else {
 				// scrolling up
-				view_data.main_header_height = view_data.main_header_height + ( view_data.last_position - page_position );
-				background_position = background_position - ( ( view_data.last_position - page_position ) / 4.5 );
-				margin_top = margin_top - ( ( view_data.last_position - page_position ) / 3.25 );
-				header_opacity = header_opacity + ( ( view_data.last_position - page_position ) / 800 );
-				cta_opacity = cta_opacity + ( ( view_data.last_position - page_position ) / 200 );
+				background_position = background_position - ( ( view_data.last_position - page_position ) / incrementor.background );
+				margin_top = margin_top - ( ( view_data.last_position - page_position ) / incrementor.margin );
+				header_opacity = header_opacity + ( ( view_data.last_position - page_position ) / incrementor.opacity );
+				cta_opacity = cta_opacity + ( ( view_data.last_position - page_position ) / incrementor.cta_opacity );
 			}
 			view_data.last_position = page_position;
 
@@ -73,7 +74,7 @@ FontDetect=function(){function e(){if(!n){n=!0;var e=document.body,t=document.bo
 	};
 
 	$(document).ready(function(){
-		if ( ! is_home() && ! is_ios() && 0 !== $('.has-background-image' ).length ) {
+		if ( ! is_ios() && 0 === $('.home' ).length && 0 !== $('.has-background-image' ).length ) {
 			FontDetect.onFontLoaded( 'Open Sans Condensed', on_font_loaded, function() { console.log('did not load' ) }, {msTimeout: 3000});
 		}
 	});
