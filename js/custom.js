@@ -9,7 +9,8 @@ FontDetect=function(){function e(){if(!n){n=!0;var e=document.body,t=document.bo
 	var incrementor = {
 		background: 4.5,
 		margin: 6.25,
-		opacity: 500
+		opacity: 500,
+		cta_opacity: 200
 	};
 
 	/**
@@ -47,7 +48,7 @@ FontDetect=function(){function e(){if(!n){n=!0;var e=document.body,t=document.bo
 		var background_position = 0 + ( page_position / incrementor.background );
 		var margin_top = 100 + ( page_position / incrementor.margin );
 		var header_opacity = 1 - ( page_position / incrementor.opacity );
-		var cta_opacity = 1 - ( page_position / 300 );
+		var cta_opacity = 1 - ( page_position / incrementor.cta_opacity );
 
 		view_data.main_header.css( { 'background-position-y' : background_position } );
 		view_data.headline_container.css( { 'margin-top' : margin_top, 'opacity' : header_opacity } );
@@ -65,13 +66,13 @@ FontDetect=function(){function e(){if(!n){n=!0;var e=document.body,t=document.bo
 				background_position = background_position + ( ( page_position - view_data.last_position ) / incrementor.background );
 				margin_top = margin_top + ( ( page_position - view_data.last_position ) / incrementor.margin );
 				header_opacity = header_opacity - ( ( page_position - view_data.last_position ) / incrementor.opacity );
-				cta_opacity = cta_opacity - ( ( page_position - view_data.last_position ) / 300 );
+				cta_opacity = cta_opacity - ( ( page_position - view_data.last_position ) / incrementor.cta_opacity );
 			} else {
 				// scrolling up
 				background_position = background_position - ( ( view_data.last_position - page_position ) / incrementor.background );
 				margin_top = margin_top - ( ( view_data.last_position - page_position ) / incrementor.margin );
 				header_opacity = header_opacity + ( ( view_data.last_position - page_position ) / incrementor.opacity );
-				cta_opacity = cta_opacity + ( ( view_data.last_position - page_position ) / 300 );
+				cta_opacity = cta_opacity + ( ( view_data.last_position - page_position ) / incrementor.cta_opacity );
 			}
 			view_data.last_position = page_position;
 
