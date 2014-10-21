@@ -50,6 +50,10 @@ FontDetect=function(){function e(){if(!n){n=!0;var e=document.body,t=document.bo
 		$(window).on( 'scroll', function() {
 			var page_position = $(this).scrollTop();
 
+			if ( page_position > view_data.main_header_height ) {
+				return;
+			}
+
 			if ( page_position > view_data.last_position ) {
 				// scrolling down
 				background_position = background_position + ( ( page_position - view_data.last_position ) / 4.5 );
