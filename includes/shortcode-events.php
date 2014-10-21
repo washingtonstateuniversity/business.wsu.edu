@@ -8,10 +8,15 @@ class WSU_COB_Events {
 	public function display_events( $atts ) {
 		$default_atts = array(
 			'display' => 'full',
+			'headline_wrap' => 'h3',
 			'category' => '',
 			'count' => 10,
 		);
 		$atts = shortcode_atts( $default_atts, $atts );
+
+		if ( ! in_array( $atts['headline_wrap'], array( 'h1', 'h2', 'h3', 'h4', 'h5', 'h6' ) ) ) {
+			$atts['headline_wrap'] = 'h3';
+		}
 
 		$args = array( 'post_type' => 'tribe_events', 'posts_per_page' => absint( $atts['count'] ) );
 
@@ -41,6 +46,22 @@ class WSU_COB_Events {
 			$content = ob_get_contents();
 			ob_end_clean();
 
+		} elseif ( 'sidebar' === $atts['display'] ) {
+			ob_start();
+
+			echo '<div class="cob-events-sidebar">';
+			while ( $events->have_posts() ) {
+				$events->the_post();
+				echo '<div class="cob-sidebar-event">';
+				echo '<' . $atts['headline_wrap'] . '><a href="' . get_the_permalink( get_the_ID() ) . '">' . get_the_title() . '</a></' . $atts['headline_wrap'] . '>';
+				echo tribe_events_event_schedule_details();
+				echo '<p>' . get_the_excerpt() . '</p>';
+				echo '</div>';
+			}
+			echo '</div>';
+
+			$content = ob_get_contents();
+			ob_end_clean();
 		} else {
 			ob_start();
 			?>
