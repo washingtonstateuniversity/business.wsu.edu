@@ -6,6 +6,12 @@ FontDetect=function(){function e(){if(!n){n=!0;var e=document.body,t=document.bo
 		is_home : 0
 	};
 
+	var incrementor = {
+		background: 4.5,
+		margin: 6.25,
+		opacity: 500
+	};
+
 	/**
 	 * Determine if this page view has the `home` class assigned to body.
 	 *
@@ -38,9 +44,9 @@ FontDetect=function(){function e(){if(!n){n=!0;var e=document.body,t=document.bo
 		// Main headline
 		var page_position = $(this ).scrollTop();
 
-		var background_position = 0 + ( page_position / 4.5 );
-		var margin_top = 100 + ( page_position / 6.25 );
-		var header_opacity = 1 - ( page_position / 700 );
+		var background_position = 0 + ( page_position / incrementor.background );
+		var margin_top = 100 + ( page_position / incrementor.margin );
+		var header_opacity = 1 - ( page_position / incrementor.opacity );
 		var cta_opacity = 1 - ( page_position / 300 );
 
 		view_data.main_header.css( { 'background-position-y' : background_position } );
@@ -56,15 +62,15 @@ FontDetect=function(){function e(){if(!n){n=!0;var e=document.body,t=document.bo
 
 			if ( page_position > view_data.last_position ) {
 				// scrolling down
-				background_position = background_position + ( ( page_position - view_data.last_position ) / 4.5 );
-				margin_top = margin_top + ( ( page_position - view_data.last_position ) / 6.25 );
-				header_opacity = header_opacity - ( ( page_position - view_data.last_position ) / 700 );
+				background_position = background_position + ( ( page_position - view_data.last_position ) / incrementor.background );
+				margin_top = margin_top + ( ( page_position - view_data.last_position ) / incrementor.margin );
+				header_opacity = header_opacity - ( ( page_position - view_data.last_position ) / incrementor.opacity );
 				cta_opacity = cta_opacity - ( ( page_position - view_data.last_position ) / 300 );
 			} else {
 				// scrolling up
-				background_position = background_position - ( ( view_data.last_position - page_position ) / 4.5 );
-				margin_top = margin_top - ( ( view_data.last_position - page_position ) / 6.25 );
-				header_opacity = header_opacity + ( ( view_data.last_position - page_position ) / 700 );
+				background_position = background_position - ( ( view_data.last_position - page_position ) / incrementor.background );
+				margin_top = margin_top - ( ( view_data.last_position - page_position ) / incrementor.margin );
+				header_opacity = header_opacity + ( ( view_data.last_position - page_position ) / incrementor.opacity );
 				cta_opacity = cta_opacity + ( ( view_data.last_position - page_position ) / 300 );
 			}
 			view_data.last_position = page_position;
