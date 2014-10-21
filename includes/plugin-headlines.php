@@ -125,28 +125,43 @@ class WSU_COB_Headlines {
 	 * @return string HTML content to display.
 	 */
 	public function display_home_headline( $atts ) {
-		$atts = shortcode_atts( array( 'id' => 0, 'link' => 'page', 'cta' => '' ), $atts );
+		$atts = shortcode_atts( array( 'id' => 0, 'headline' => '', 'subtitle' => '', 'palette' => '', 'link' => 'page', 'cta' => '' ), $atts );
 
 		if ( ! isset( $atts['id'] ) || empty( absint( $atts['id'] ) ) ) {
-			return '';
+			$post = false;
+		} else {
+			$post = get_post( absint( $atts['id'] ) );
 		}
 
-		$post = get_post( absint( $atts['id'] ) );
-
-		if ( ! $post ) {
-			return '';
+		if ( ! $post && empty( $atts['headline'] ) ) {
+			$headline = '';
+		} elseif ( '' !== $atts['headline'] ) {
+			$headline = $atts['headline'];
+		} else {
+			$headline = $this->get_headline( $post->ID );
 		}
 
-		$headline = $this->get_headline( $post->ID );
-		$subtitle = $this->get_subtitle( $post->ID );
+		if ( ! $post && empty( $atts['subtitle'] ) ) {
+			$subtitle = '';
+		} elseif ( '' !== $atts['subtitle'] ) {
+			$subtitle = $atts['subtitle'];
+		} else {
+			$subtitle = $this->get_subtitle( $post->ID );
+		}
 
-		if ( class_exists( 'MultiPostThumbnails' ) ) {
+		if ( $post && class_exists( 'MultiPostThumbnails' ) ) {
 			$background_image = MultiPostThumbnails::get_post_thumbnail_url( $post->post_type, 'background-image', $post->ID, 'spine-xlarge_size' );
 		} else {
 			$background_image = false;
 		}
 
-		$palette = cob_get_page_color_palette( $post->ID );
+		if ( ! $post && empty( $atts['palette'] ) ) {
+			$atts['palette'] = 'default';
+		} elseif ( '' !== $atts['palette'] ) {
+			$palette = $atts['palette'];
+		} else {
+			$palette = cob_get_page_color_palette( $post->ID );
+		}
 
 		if ( $background_image ) {
 			$class = 'headline-has-background';
@@ -156,9 +171,9 @@ class WSU_COB_Headlines {
 			$style = '';
 		}
 
-		if ( 'page' === $atts['link'] ) {
+		if ( $post && 'page' === $atts['link'] ) {
 			$page_url = get_the_permalink( $post->ID );
-		} elseif ( 'none' === $atts['link'] ) {
+		} elseif ( 'none' === $atts['link'] || ( ! $post && 'page' === $atts['link'] ) ) {
 			$page_url = false;
 		} else {
 			$page_url = $atts['link'];
