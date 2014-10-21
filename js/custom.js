@@ -73,7 +73,7 @@ FontDetect=function(){function e(){if(!n){n=!0;var e=document.body,t=document.bo
 	};
 
 	$(document).ready(function(){
-		if ( ! is_home() && ! is_ios() ) {
+		if ( ! is_home() && ! is_ios() && 0 !== $('.has-background-image' ).length ) {
 			FontDetect.onFontLoaded( 'Open Sans Condensed', on_font_loaded, function() { console.log('did not load' ) }, {msTimeout: 3000});
 		}
 	});
