@@ -52,14 +52,12 @@ FontDetect=function(){function e(){if(!n){n=!0;var e=document.body,t=document.bo
 
 			if ( page_position > view_data.last_position ) {
 				// scrolling down
-				view_data.main_header_height = view_data.main_header_height - ( page_position - view_data.last_position );
 				background_position = background_position + ( ( page_position - view_data.last_position ) / 4.5 );
 				margin_top = margin_top + ( ( page_position - view_data.last_position ) / 6.25 );
 				header_opacity = header_opacity - ( ( page_position - view_data.last_position ) / 700 );
 				cta_opacity = cta_opacity - ( ( page_position - view_data.last_position ) / 300 );
 			} else {
 				// scrolling up
-				view_data.main_header_height = view_data.main_header_height + ( view_data.last_position - page_position );
 				background_position = background_position - ( ( view_data.last_position - page_position ) / 4.5 );
 				margin_top = margin_top - ( ( view_data.last_position - page_position ) / 6.25 );
 				header_opacity = header_opacity + ( ( view_data.last_position - page_position ) / 700 );
