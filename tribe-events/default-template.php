@@ -43,13 +43,14 @@ get_header();
 		<?php endif; ?>
 
 
-		<section class="row single gutter pad-ends">
+		<section class="row side-right gutter pad-ends">
 
 			<div class="column one" id="tribe-events-pg-template">
 				<?php tribe_events_before_html(); ?>
 				<?php tribe_get_view(); ?>
 				<?php tribe_events_after_html(); ?>
 			</div>
+			<div class="column two"></div>
 		</section>
 
 	</main>
