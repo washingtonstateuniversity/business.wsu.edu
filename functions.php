@@ -119,6 +119,10 @@ add_filter( 'post_type_link', 'cob_filter_post_type_link', 10, 2 );
 function cob_filter_post_type_link( $post_link, $post ) {
 	if ( 'tribe_events' === $post->post_type ) {
 		$post_link = str_replace( home_url( '/event/' ), home_url( '/news-events/calendar/event/' ), $post_link );
+	} elseif ( 'tribe_venue' === $post->post_type ) {
+		$post_link = str_replace( home_url( '/venue/' ), home_url( '/news-events/calendar/venue/' ), $post_link );
+	} elseif ( 'tribe_organizer' === $post->post_type ) {
+		$post_link = str_replace( home_url( '/organizer/' ), home_url( '/news-events/calendar/organizer/' ), $post_link );
 	}
 
 	return $post_link;
