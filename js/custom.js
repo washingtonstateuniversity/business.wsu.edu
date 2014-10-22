@@ -77,5 +77,22 @@ FontDetect=function(){function e(){if(!n){n=!0;var e=document.body,t=document.bo
 		if ( ! is_ios() && 0 === $('.home' ).length && 0 !== $('.has-background-image' ).length ) {
 			FontDetect.onFontLoaded( 'Open Sans Condensed', on_font_loaded, function() { console.log('did not load' ) }, {msTimeout: 3000});
 		}
+
+		// Override some default Spine behavior to deal with our extremely large menus.
+		if( $(".ios .hybrid .unshelved" ).length <= 0) {
+			var glue = $( '#glue' );
+			var main = $( 'main' );
+			var glue_ht = glue.height();
+
+			// Watch any expansion or contraction of glue navigation elements and
+			// resize main so that scroll is not locked.
+			glue.on( 'click', 'li', function() {
+				if ( glue.height() > glue_ht ) {
+					main.height( glue.height() + 10 );
+				} else {
+					main.height( glue_ht );
+				}
+			} );
+		}
 	});
 }(jQuery, FontDetect, window));
