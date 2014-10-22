@@ -134,6 +134,9 @@ class WSU_COB_Color_Palette {
 
 			// Always apply a palette class to the body for text.
 			$classes[] = 'cob-palette-text-' . $palette;
+		} else {
+			$classes[] = 'cob-palette-default';
+			$classes[] = 'cob-palette-text-default';
 		}
 
 		return $classes;
