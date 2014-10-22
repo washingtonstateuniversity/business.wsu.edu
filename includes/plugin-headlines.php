@@ -257,6 +257,10 @@ $wsu_cob_headlines = new WSU_COB_Headlines();
 function cob_get_page_headline( $post_id = 0 ) {
 	global $wsu_cob_headlines;
 
+	if ( is_404() ) {
+		return 'Page Not Found';
+	}
+
 	$post_id = absint( $post_id );
 
 	if ( 0 === $post_id ) {
@@ -276,6 +280,10 @@ function cob_get_page_headline( $post_id = 0 ) {
  */
 function cob_get_page_subtitle( $post_id = 0 ) {
 	global $wsu_cob_headlines;
+
+	if ( is_404() ) {
+		return false;
+	}
 
 	$post_id = absint( $post_id );
 
@@ -297,6 +305,10 @@ function cob_get_page_subtitle( $post_id = 0 ) {
 function cob_get_page_call_to_action( $post_id = 0 ) {
 	global $wsu_cob_headlines;
 
+	if ( is_404() ) {
+		return false;
+	}
+
 	$post_id = absint( $post_id );
 
 	if ( 0 === $post_id ) {
@@ -316,6 +328,10 @@ function cob_get_page_call_to_action( $post_id = 0 ) {
  */
 function cob_get_page_call_to_action_url( $post_id = 0 ) {
 	global $wsu_cob_headlines;
+
+	if ( is_404() ) {
+		return false;
+	}
 
 	$post_id = absint( $post_id );
 
