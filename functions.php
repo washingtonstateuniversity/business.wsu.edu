@@ -145,10 +145,6 @@ function cob_filter_rewrite_rules( $wp_rewrite ) {
 			$new_key = str_replace( '(.*)events/', '(.*)news-events/calendar/', $key );
 		} elseif ( 0 === strpos( $key, 'event/' ) ) {
 			$new_key = str_replace( 'event/', 'news-events/calendar/event/', $key );
-		} elseif ( 0 === strpos( $key, 'organizer/' ) ) {
-			$new_key = str_replace( 'organizer/', 'news-events/calendar/organizer/', $key );
-		} elseif ( 0 === strpos( $key, 'venue/' ) ) {
-			$new_key = str_replace( $key, 'news-events/calendar/venue/', $key );
 		} else {
 			$new_key = $key;
 		}
@@ -156,6 +152,48 @@ function cob_filter_rewrite_rules( $wp_rewrite ) {
 		$wp_rewrite->rules[ $new_key ] = $rule;
 	}
 	return $wp_rewrite;
+}
+
+add_filter( 'tribe_events_register_event_type_args', 'cob_filter_event_content_type' );
+/**
+ * Alter the default arguments for the event content type to support our URL structure.
+ *
+ * @param $args
+ *
+ * @return mixed
+ */
+function cob_filter_event_content_type( $args ) {
+	$args['rewrite']['slug'] = '/news-events/calendar/event';
+	$args['rewrite']['with_front'] = true;
+	return $args;
+}
+
+add_filter( 'tribe_events_register_venue_type_args', 'cob_filter_venue_content_type' );
+/**
+ * Alter the default arguments for the venue content type to support our URL structure.
+ *
+ * @param $args
+ *
+ * @return mixed
+ */
+function cob_filter_venue_content_type( $args ) {
+	$args['rewrite']['slug'] = '/news-events/calendar/venue';
+	$args['rewrite']['with_front'] = true;
+	return $args;
+}
+
+add_filter( 'tribe_events_register_organizer_type_args', 'cob_filter_organizer_content_type' );
+/**
+ * Alter the default arguments for the organizer content type to support our URL structure.
+ *
+ * @param $args
+ *
+ * @return mixed
+ */
+function cob_filter_organizer_content_type( $args ) {
+	$args['rewrite']['slug'] = '/news-events/calendar/organizer';
+	$args['rewrite']['with_front'] = true;
+	return $args;
 }
 
 add_action( 'parse_query', 'cob_remove_events_from_edit', 51 );
