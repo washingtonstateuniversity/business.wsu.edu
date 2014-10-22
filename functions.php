@@ -168,7 +168,7 @@ function cob_remove_events_from_edit( $query ) {
 		return;
 	}
 
-	if ( 'edit' === get_current_screen()->base && 'tribe_events' !== get_current_screen()->post_type ) {
+	if ( 'edit' === get_current_screen()->base && 'tribe_events' !== get_current_screen()->post_type && $query->is_main_query() ) {
 		$query->set( 'post_type', get_current_screen()->post_type );
 	}
 
