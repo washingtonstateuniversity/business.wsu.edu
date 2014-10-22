@@ -77,14 +77,8 @@ class WSU_COB_Color_Palette {
 
 	/**
 	 * Enqueue styles to be used for the display of taxonomy terms.
-	 *
-	 * @param string $hook Hook indicating the current admin page.
 	 */
-	public function admin_enqueue_scripts( $hook ) {
-		if ( 'post.php' !== $hook ) {
-			return;
-		}
-
+	public function admin_enqueue_scripts() {
 		if ( 'page' === get_current_screen()->id ) {
 			wp_enqueue_style( 'wsu-cob-palette-admin', get_stylesheet_directory_uri() . '/css/admin.css', array(), wsu_cob_script_version() );
 			wp_enqueue_script( 'wsu-cob-palette-admin-js', get_stylesheet_directory_uri() . '/js/admin.js', array( 'jquery' ), wsu_cob_script_version() );
