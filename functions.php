@@ -266,3 +266,11 @@ function cob_bu_navigation_filter_anchor_attrs( $attrs ) {
 
 	return $attrs;
 }
+
+add_action( 'after_setup_theme', 'cob_remove_feed_links' );
+/**
+ * Remove extra feeds to comments and other areas that we aren't necessarily prepared for.
+ */
+function cob_remove_feed_links() {
+	remove_action( 'wp_head', 'feed_links_extra', 3 );
+}
