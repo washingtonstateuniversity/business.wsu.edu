@@ -258,7 +258,7 @@ function cob_get_page_headline( $post_id = 0 ) {
 	global $wsu_cob_headlines;
 
 	if ( is_404() ) {
-		return 'Page Not Found';
+		return "We're sorry. We can't find the page you're looking for.";
 	}
 
 	$post_id = absint( $post_id );

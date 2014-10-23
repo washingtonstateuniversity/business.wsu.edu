@@ -11,7 +11,7 @@
 				<article id="post-0" class="post error404 no-results not-found">
 
 					<div class="entry-content">
-						<p>It seems we can't find what you're looking for. Perhaps searching can help.</p>
+						<p>Perhaps searching can help.</p>
 						<?php get_search_form(); ?>
 					</div><!-- .entry-content -->
 
