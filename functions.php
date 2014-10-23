@@ -128,6 +128,20 @@ function cob_filter_post_type_link( $post_link, $post ) {
 	return $post_link;
 }
 
+add_filter( 'term_link', 'cob_filter_term_link', 10 );
+/**
+ * Filter category links attached to events to match our slug.
+ *
+ * @param $term_link
+ *
+ * @return mixed
+ */
+function cob_filter_term_link( $term_link ) {
+	$term_link = str_replace( home_url( '/events/category/' ), home_url( '/news-events/calendar/category/' ), $term_link );
+
+	return $term_link;
+}
+
 add_filter( 'generate_rewrite_rules', 'cob_filter_rewrite_rules', 11 );
 /**
  * Replace rewrite rules provided by The Events Calendar with our own to support
@@ -265,4 +279,12 @@ function cob_bu_navigation_filter_anchor_attrs( $attrs ) {
 	$attrs['title'] = '';
 
 	return $attrs;
+}
+
+add_action( 'after_setup_theme', 'cob_remove_feed_links' );
+/**
+ * Remove extra feeds to comments and other areas that we aren't necessarily prepared for.
+ */
+function cob_remove_feed_links() {
+	remove_action( 'wp_head', 'feed_links_extra', 3 );
 }
