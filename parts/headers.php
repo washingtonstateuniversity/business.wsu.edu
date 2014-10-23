@@ -36,7 +36,7 @@ if ( spine_get_option( 'main_header_show' ) == 'true' ) : ?>
 			<?php if ( $cob_page_cta = cob_get_page_call_to_action() ) : ?>
 				<div class="page-call-to-action">
 				<?php if ( $cob_page_cta_url = cob_get_page_call_to_action_url() ) : ?>
-					<a href="<?php esc_url( $cob_page_cta_url ); ?>"><?php echo esc_html( $cob_page_cta ); ?></a>
+					<a href="<?php echo esc_url( $cob_page_cta_url ); ?>"><?php echo esc_html( $cob_page_cta ); ?></a>
 				<?php else : ?>
 					<?php echo esc_html( $cob_page_cta ); ?>
 				<?php endif; ?>
