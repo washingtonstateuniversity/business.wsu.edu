@@ -288,6 +288,7 @@ add_action( 'after_setup_theme', 'cob_remove_feed_links' );
 function cob_remove_feed_links() {
 	remove_action( 'wp_head', 'feed_links_extra', 3 );
 }
+
 /* 
 Add responsive container to embeds
 ------------------------------------ */ 
@@ -295,3 +296,28 @@ function embed_html($html) {
     return '<div class="fluid-container">'.$html.'</div>';
 }
 add_filter( 'embed_oembed_html', 'embed_html', 99, 4 );
+
+add_filter( 'gform_field_validation', 'cob_validate_confirm_fields', 10, 4 );
+/**
+ * Provides a hacky method for adding a "confirmation" field immediately after a field with
+ * a css class of "confirm-next". Very rudimentary.
+ *
+ * @param $result
+ * @param $value
+ * @param $form
+ * @param $field
+ *
+ * @return mixed
+ */
+function cob_validate_confirm_fields( $result, $value, $form, $field ) {
+	if ( isset( $field['cssClass'] ) && 'confirm-next' === $field['cssClass'] ) {
+		$id = $field['id'] + 1;
+		$next_value = $_POST['input_' . $id ];
+
+		if ( $value !== $next_value ) {
+			$result['is_valid'] = false;
+			$result['message'] = 'This field should match the value in the confirmation field below.';
+		}
+	}
+	return $result;
+}
