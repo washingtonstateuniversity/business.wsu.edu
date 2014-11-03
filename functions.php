@@ -289,13 +289,17 @@ function cob_remove_feed_links() {
 	remove_action( 'wp_head', 'feed_links_extra', 3 );
 }
 
-/* 
-Add responsive container to embeds
------------------------------------- */ 
-function embed_html($html) {
-    return '<div class="fluid-container">'.$html.'</div>';
-}
 add_filter( 'embed_oembed_html', 'embed_html', 99, 4 );
+/**
+ * Add responsive container to embeds.
+ *
+ * @param $html
+ *
+ * @return string
+ */
+function embed_html( $html ) {
+    return '<div class="fluid-container">' . $html . '</div>';
+}
 
 add_filter( 'gform_field_validation', 'cob_validate_confirm_fields', 10, 4 );
 /**
