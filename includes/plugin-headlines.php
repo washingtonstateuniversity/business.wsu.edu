@@ -125,7 +125,7 @@ class WSU_COB_Headlines {
 	 * @return string HTML content to display.
 	 */
 	public function display_home_headline( $atts ) {
-		$atts = shortcode_atts( array( 'id' => 0, 'headline' => '', 'subtitle' => '', 'palette' => '', 'link' => 'page', 'cta' => '' ), $atts );
+		$atts = shortcode_atts( array( 'id' => 0, 'headline' => '', 'subtitle' => '', 'background' => '', 'palette' => '', 'link' => 'page', 'cta' => '' ), $atts );
 
 		if ( ! isset( $atts['id'] ) || empty( absint( $atts['id'] ) ) ) {
 			$post = false;
@@ -149,7 +149,9 @@ class WSU_COB_Headlines {
 			$subtitle = $this->get_subtitle( $post->ID );
 		}
 
-		if ( $post && class_exists( 'MultiPostThumbnails' ) ) {
+		if ( ! empty( $atts['background'] ) ) {
+			$background_image = $atts['background'];
+		} elseif ( $post && class_exists( 'MultiPostThumbnails' ) ) {
 			$background_image = MultiPostThumbnails::get_post_thumbnail_url( $post->post_type, 'background-image', $post->ID, 'spine-xlarge_size' );
 		} else {
 			$background_image = false;
