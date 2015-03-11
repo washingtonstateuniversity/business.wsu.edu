@@ -1,9 +1,12 @@
 <nav id="spine-sitenav" class="spine-sitenav">
 	<?php
+	$output_menu_script = false;
 
 	if ( '/' !== wsuwp_get_current_site()->path ) {
 		$switch_site = get_blog_details( array( 'domain' => wsuwp_get_current_site()->domain, 'path' => '/' ) );
 		switch_to_blog( $switch_site->blog_id );
+		$output_menu_script = true;
+
 	}
 
 	if ( function_exists( 'bu_navigation_display_primary' ) ) {
@@ -42,3 +45,17 @@
 	}
 	?>
 </nav>
+
+<?php if ( $output_menu_script ) : ?>
+<script>
+	(function($){
+		$('document').ready( function() {
+			var $spine_sitenav = $('#spine-sitenav'),
+				$spine_current = $spine_sitenav.find('a[href="<?php echo esc_js( get_the_permalink() ); ?>"]');
+
+			$spine_sitenav.find('.active').each(function(){ jQuery(this).removeClass('dogeared active current'); });
+			$spine_current.addClass('active dogeared').parent().addClass('active current dogeared');
+		});
+	}(jQuery));
+</script>
+<?php endif;
