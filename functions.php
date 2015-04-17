@@ -85,6 +85,8 @@ function cob_enqueue_scripts() {
 	if ( is_singular() ) {
 		wp_enqueue_script( 'cob-custom-js', get_stylesheet_directory_uri() . '/js/custom.js', array( 'jquery' ), wsu_cob_script_version(), true );
 	}
+
+	wp_enqueue_script( 'cob-remarketing', 'https://www.googleadservices.com/pagead/conversion.js', array(), false, true );
 }
 
 add_filter( 'tribe_events_getLink', 'cob_modify_events_url', 10, 2 );
@@ -324,4 +326,21 @@ function cob_validate_confirm_fields( $result, $value, $form, $field ) {
 		}
 	}
 	return $result;
+}
+
+add_action( 'wp_footer', 'cob_remarketing_tag' );
+/**
+ * Setup variables for the enqueued remarketing script.
+ */
+function cob_remarketing_tag() {
+	?>
+	<script type="text/javascript">
+		/* <![CDATA[ */
+		var google_conversion_id = 1019899730;
+		var google_custom_params = window.google_tag_params;
+		var google_remarketing_only = true;
+		/* ]]> */
+	</script>
+	<noscript><div style="display:inline;"><img height="1" width="1" style="border-style:none;" alt="" src="//googleads.g.doubleclick.net/pagead/viewthroughconversion/1019899730/?value=0&amp;guid=ON&amp;script=0"/></div></noscript>
+	<?php
 }
