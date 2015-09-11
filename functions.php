@@ -161,6 +161,8 @@ function cob_filter_rewrite_rules( $wp_rewrite ) {
 			$new_key = str_replace( '(.*)events/', '(.*)news-events/calendar/', $key );
 		} elseif ( 0 === strpos( $key, 'event/' ) ) {
 			$new_key = str_replace( 'event/', 'news-events/calendar/event/', $key );
+		} elseif ( 0 === strpos( $key, '(?:events)' ) ) {
+			$new_key = str_replace( '(?:events)', '(?:news-events/calendar)', $key );
 		} else {
 			$new_key = $key;
 		}
