@@ -346,3 +346,28 @@ function cob_remarketing_tag() {
 	<noscript><div style="display:inline;"><img height="1" width="1" style="border-style:none;" alt="" src="//googleads.g.doubleclick.net/pagead/viewthroughconversion/1019899730/?value=0&amp;guid=ON&amp;script=0"/></div></noscript>
 	<?php
 }
+
+add_action( 'wp_head', 'cob_facebook_pixel', 99 );
+/**
+ * Add a Facebook tracking pixel.
+ */
+function cob_facebook_pixel() {
+	?>
+	<script>(function() {
+			var _fbq = window._fbq || (window._fbq = []);
+			if (!_fbq.loaded) {
+				var fbds = document.createElement('script');
+				fbds.async = true;
+				fbds.src = '//connect.facebook.net/en_US/fbds.js';
+				var s = document.getElementsByTagName('script')[0];
+				s.parentNode.insertBefore(fbds, s);
+				_fbq.loaded = true;
+			}
+			_fbq.push(['addPixelId', '851335368294885']);
+		})();
+		window._fbq = window._fbq || [];
+		window._fbq.push(['track', 'PixelInitialized', {}]);
+	</script>
+	<noscript><img height="1" width="1" alt="" style="display:none" src="https://www.facebook.com/tr?id=851335368294885&amp;ev=PixelInitialized" /></noscript>
+	<?php
+}
