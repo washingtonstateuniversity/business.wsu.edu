@@ -224,7 +224,7 @@ add_action( 'parse_query', 'cob_remove_events_from_edit', 51 );
  * @param $query
  */
 function cob_remove_events_from_edit( $query ) {
-	if ( ! is_admin() || ! get_current_screen() ) {
+	if ( ! is_admin() || ! function_exists( 'get_current_screen' ) ) {
 		return;
 	}
 
