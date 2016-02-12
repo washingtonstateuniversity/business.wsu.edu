@@ -2,11 +2,10 @@
 	<?php
 	$output_menu_script = false;
 
-	if ( '/' !== wsuwp_get_current_site()->path ) {
+	if ( '/' !== wsuwp_get_current_site()->path && '/dividend/' !== wsuwp_get_current_site()->path ) {
 		$switch_site = get_blog_details( array( 'domain' => wsuwp_get_current_site()->domain, 'path' => '/' ) );
 		switch_to_blog( $switch_site->blog_id );
 		$output_menu_script = true;
-
 	}
 
 	if ( function_exists( 'bu_navigation_display_primary' ) ) {
