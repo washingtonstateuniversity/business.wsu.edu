@@ -3,7 +3,7 @@
 	$output_menu_script = false;
 
 	$nav_site = get_site();
-	if ( '/' !== $nav_site->path && '/dividend/' !== $nav_site->path ) {
+	if ( '/' !== $nav_site->path && '/dividend/' !== $nav_site->path && '/weska/' !== $nav_site->path ) {
 		$switch_site = get_blog_details( array( 'domain' => $nav_site->domain, 'path' => '/' ) );
 		switch_to_blog( $switch_site->blog_id );
 		$output_menu_script = true;
