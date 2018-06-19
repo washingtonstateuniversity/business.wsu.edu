@@ -364,3 +364,29 @@ function cob_facebook_pixel() {
 	<!-- End Facebook Pixel Code -->
 	<?php
 }
+
+add_filter( 'pre_get_posts', 'cob_disable_university_taxonomy_archives', 11 );
+/**
+ * Disable archive views for university taxonomies.
+ *
+ * @since 1.0.18
+ *
+ * @param \WP_Query $wp_query
+ */
+function cob_disable_university_taxonomy_archives( $wp_query ) {
+	if ( is_admin() || ! $wp_query->is_main_query() || ! is_archive() ) {
+		return;
+	}
+
+	$university_taxonomies = array(
+		'wsuwp_university_category',
+		'wsuwp_university_location',
+		'wsuwp_university_org',
+	);
+
+	foreach( $university_taxonomies as $university_taxonomy ) {
+		if ( is_tax( $university_taxonomy ) ) {
+			$wp_query->set_404();
+		}
+	}
+}
