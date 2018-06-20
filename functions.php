@@ -353,10 +353,10 @@ function cob_facebook_pixel() {
 	n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
 	t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
 	document,'script','//connect.facebook.net/en_US/fbevents.js');
-	
+
 	fbq('init', '851335368294885');
 	fbq('track', "PageView");
-	
+
 	</script>
 	<noscript><img height="1" width="1" style="display:none"
 	src="https://www.facebook.com/tr?id=851335368294885&ev=PageView&noscript=1"
@@ -365,28 +365,27 @@ function cob_facebook_pixel() {
 	<?php
 }
 
-add_filter( 'pre_get_posts', 'cob_disable_university_taxonomy_archives', 11 );
+add_filter( 'register_taxonomy_args', 'disable_university_taxonomy_archives', 12, 2 );
 /**
- * Disable archive views for university taxonomies.
+ * Sets the `public` argument to `false` for University Taxonomies.
  *
  * @since 1.0.18
  *
- * @param WP_Query $wp_query
+ * @param array  $args     Arguments for registering a taxonomy.
+ * @param string $taxonomy Taxonomy key.
+ *
+ * @return array
  */
-function cob_disable_university_taxonomy_archives( $wp_query ) {
-	if ( is_admin() || ! $wp_query->is_main_query() || ! is_archive() ) {
-		return;
-	}
-
+function disable_university_taxonomy_archives( $args, $taxonomy ) {
 	$university_taxonomies = array(
 		'wsuwp_university_category',
 		'wsuwp_university_location',
 		'wsuwp_university_org',
 	);
 
-	foreach( $university_taxonomies as $university_taxonomy ) {
-		if ( is_tax( $university_taxonomy ) ) {
-			$wp_query->set_404();
-		}
+	if ( in_array( $taxonomy, $university_taxonomies, true ) ) {
+		$args['public'] = false;
 	}
+
+	return $args;
 }
