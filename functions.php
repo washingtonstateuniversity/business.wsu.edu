@@ -385,6 +385,7 @@ function disable_university_taxonomy_archives( $args, $taxonomy ) {
 
 	if ( in_array( $taxonomy, $university_taxonomies, true ) ) {
 		$args['public'] = false;
+		$args['query_var'] = false;
 	}
 
 	return $args;
