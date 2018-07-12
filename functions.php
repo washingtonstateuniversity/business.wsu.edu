@@ -14,7 +14,7 @@ include_once( __DIR__ . '/includes/shortcode-events.php' );
  * @return string Current script version
  */
 function wsu_cob_script_version() {
-	return spine_get_script_version() . '1.0.17';
+	return spine_get_script_version() . '1.0.18';
 }
 
 add_action( 'after_setup_theme', 'cob_theme_setup' );
@@ -353,14 +353,40 @@ function cob_facebook_pixel() {
 	n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
 	t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
 	document,'script','//connect.facebook.net/en_US/fbevents.js');
-	
+
 	fbq('init', '851335368294885');
 	fbq('track', "PageView");
-	
+
 	</script>
 	<noscript><img height="1" width="1" style="display:none"
 	src="https://www.facebook.com/tr?id=851335368294885&ev=PageView&noscript=1"
 	/></noscript>
 	<!-- End Facebook Pixel Code -->
 	<?php
+}
+
+add_filter( 'register_taxonomy_args', 'disable_university_taxonomy_archives', 12, 2 );
+/**
+ * Sets the `public` argument to `false` for University Taxonomies.
+ *
+ * @since 1.0.18
+ *
+ * @param array  $args     Arguments for registering a taxonomy.
+ * @param string $taxonomy Taxonomy key.
+ *
+ * @return array
+ */
+function disable_university_taxonomy_archives( $args, $taxonomy ) {
+	$university_taxonomies = array(
+		'wsuwp_university_category',
+		'wsuwp_university_location',
+		'wsuwp_university_org',
+	);
+
+	if ( in_array( $taxonomy, $university_taxonomies, true ) ) {
+		$args['public'] = false;
+		$args['query_var'] = false;
+	}
+
+	return $args;
 }
