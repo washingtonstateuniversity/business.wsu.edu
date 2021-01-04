@@ -125,7 +125,7 @@ class WSU_COB_Headlines {
 	 * @return string HTML content to display.
 	 */
 	public function display_home_headline( $atts ) {
-		$atts = shortcode_atts( array( 'id' => 0, 'headline' => '', 'subtitle' => '', 'background' => '', 'palette' => '', 'link' => 'page', 'cta' => '' ), $atts );
+		$atts = shortcode_atts( array( 'id' => 0, 'headline' => '', 'subtitle' => '', 'background' => '', 'palette' => '', 'link' => 'page', 'cta' => '', 'link_classes' => '' ), $atts );
 
 		if ( ! isset( $atts['id'] ) || empty( absint( $atts['id'] ) ) ) {
 			$post = false;
@@ -186,11 +186,13 @@ class WSU_COB_Headlines {
 		} else {
 			$call_to_action = '';
 		}
+		
+		$link_classes = ( ! empty( $atts['link_classes'] ) ) ? $atts['link_classes'] : '';
 
 		$content = '';
 
 		if ( $page_url ) {
-			$content = '<a class="home-link-wrap cob-palette-text-' . $palette . '" href="' . esc_url( $page_url ) . '">';
+			$content = '<a class="home-link-wrap cob-palette-text-' . $palette . ' ' . esc_attr( $link_classes ) . '" href="' . esc_url( $page_url ) . '">';
 		}
 
 		$content .= '<div ' . $style . ' class="home-headline ' . $class . '"><div><h2>' . strip_tags( $headline, '<br><span><em><strong>' ) . '</h2><div class="home-subtitle">' . strip_tags( $subtitle, '<br><span><em><strong>' ) .  '</div>' . $call_to_action . '</div></div>';
