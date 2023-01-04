@@ -390,3 +390,49 @@ function disable_university_taxonomy_archives( $args, $taxonomy ) {
 
 	return $args;
 }
+
+
+function ccb_add_local_menu_setting() {
+
+	// register our setting
+    $args = array(
+        'type' => 'boolean', 
+        'default' => false,
+    );
+    register_setting( 
+        'reading', // option group "reading", default WP group
+        'ccb_use_local_menu', // option name
+        $args 
+    );
+
+	// add our new setting
+    add_settings_field(
+        'ccb_use_local_menu', // ID
+        'Use Local Menu', // Title
+        'ccb_add_local_menu_render', // Callback
+        'reading', // page
+        'default', // section
+    );
+
+}
+
+function ccb_add_local_menu_render( $args ) {
+
+	$use_local = get_option('ccb_use_local_menu', false );
+
+    echo '<input type="checkbox" id="ccb_use_local_menu" name="ccb_use_local_menu"';
+
+	if ( $use_local ) {
+
+		echo ' checked="checked"';
+	}
+	
+	echo ' />';
+   
+}
+
+
+/**
+ * Register and define the local menu settings
+ */
+add_action('admin_init', 'ccb_add_local_menu_setting');

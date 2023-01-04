@@ -2,12 +2,20 @@
 	<?php
 	$output_menu_script = false;
 
-	$nav_site = get_site();
-	if ( '/' !== $nav_site->path && '/dividend/' !== $nav_site->path && '/weska/' !== $nav_site->path && '/celebratecarson/' !== $nav_site->path ) {
-		$switch_site = get_blog_details( array( 'domain' => $nav_site->domain, 'path' => '/' ) );
-		switch_to_blog( $switch_site->blog_id );
-		$output_menu_script = true;
+	$use_local = get_option('ccb_use_local_menu', false );
+
+	if ( ! $use_local ) {
+
+		$nav_site = get_site();
+		if ( '/' !== $nav_site->path && '/dividend/' !== $nav_site->path && '/weska/' !== $nav_site->path && '/celebratecarson/' !== $nav_site->path ) {
+			$switch_site = get_blog_details( array( 'domain' => $nav_site->domain, 'path' => '/' ) );
+			switch_to_blog( $switch_site->blog_id );
+			$output_menu_script = true;
+		}
+
 	}
+
+	
 
 	if ( function_exists( 'bu_navigation_display_primary' ) ) {
 		$bu_nav_args = array(
